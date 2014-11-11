@@ -71,14 +71,16 @@ public class SuperArray{
 
     public Object get(int index){
 	if (outofrange(index)){
-	    return "ERROR: index not within range of array";
+	    //return "ERROR: index not within range of array";
+	    throw new ArithmeticException();
 	}
 	return data[index];
     }
     
     public Object set (int index, Object e){
 	if (outofrange(index)){
-	    return "ERROR: index not within range of array";
+	    //return "ERROR: index not within range of array";
+	    throw new ArithmeticException();
 	}
 	else{
 	    Object objreplaced=data[index];
@@ -89,7 +91,8 @@ public class SuperArray{
     
     public Object remove(int index){
 	if (outofrange(index)){
-	    return "ERROR: index not within range of array";
+	    //return "ERROR: index not within range of array";
+	    throw new ArithmeticException();
 	}
 	else{
 	    Object objreplaced=data[index];
@@ -103,12 +106,12 @@ public class SuperArray{
     
     public static void main(String[]args){
 	//APCS class test	
-	Integer x = new Integer(5);
-	SuperArray L = new SuperArray();
-	L.add(x);
-	L.add(new Integer(99));
-	System.out.println(L.toString());
-	System.out.println();	
+	//Integer x = new Integer(5);
+	//SuperArray L = new SuperArray();
+	//L.add(x);
+	//L.add(new Integer(99));
+	//System.out.println(L.toString());
+	//System.out.println();	
 	
 	//my tests	
 	SuperArray data=new SuperArray();
@@ -123,9 +126,21 @@ public class SuperArray{
 	data.add(5,"woot");
 	System.out.println(data.toString());
 	//data.set(5,"wayusdfsdfdso");
-	//System.out.println(data.set(17,"wayusdfsdfdso"));
-	System.out.println(data.remove(17));
-	System.out.println(data.remove(5));
+	
+	try{
+	    System.out.println(data.set(17,"wayusdfsdfdso"));
+	}
+	catch(ArithmeticException e){
+	    System.out.println("Please tell me you can count.");
+	}
+	
+	try{
+	    System.out.println(data.remove(17));
+	}
+	catch(ArithmeticException e){
+	    System.out.println("Math isn't for you!");
+	}
+	//System.out.println(data.remove(5));
 	System.out.println(data.toString());
     }
 }
