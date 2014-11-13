@@ -1,0 +1,5 @@
+public class rmDup{
+    public void collapseDuplicates(ArrayList<Integer> L){
+
+    }
+}
