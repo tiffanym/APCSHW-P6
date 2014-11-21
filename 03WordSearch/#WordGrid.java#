@@ -144,14 +144,7 @@ public class WordGrid{
     }
 
     public static void main(String[]args){
-	WordGrid w=new WordGrid(6,7);
-	w.clear();
-	String word1="Happy";
-	String word2="Duhh";
-	//w.addWordHorizontal(word1,3,2);
-	//w.addWordHorizontal(word2,1,4);
-	
-	//System.out.println(w.toString());
+	/*
 	int[][] ary={
 	    {1,2,3},
 	    {6,5,4},
@@ -160,5 +153,15 @@ public class WordGrid{
 	System.out.println(max(ary));
 	System.out.println(rowSum(ary,1));
 	System.out.println(isSquare(ary));
+	*/
+
+	WordGrid w=new WordGrid(6,7);
+	w.clear();
+	String word1="Happy";
+	String word2="Duhh";
+	w.addWordHorizontal(word1,3,2);
+	w.addWordHorizontal(word2,1,4);	
+	System.out.println(w.toString());
+	
     }
 }
