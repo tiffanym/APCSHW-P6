@@ -28,64 +28,13 @@ public class WordGrid{
     public String toString(){
 	String s="";
 	for (int i=0;i<data.length;i++){
+	    s+="[";
 	    for (int x=0;x<data[i].length;x++){
 		s=s+data[i][x];
 	    }
-	    s=s+"\n";
+	    s=s+"]\n";
 	}
 	return s;
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from left to right, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordHorizontal(String word,int row, int col){
-	int width=data[0].length;
-	if (word.length()+col>width){
-	    return false;
-	}	
-	else{
-	    for (int i=col;i<word.length()+col;i++){
-		//if
-		//data[row][i]=word.charAt(i-col);
-	    }
-	    return true;
-	}
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top to bottom, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordVertical(String word,int row, int col){
-	return false;
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top left to bottom right, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordDiagonal(String word,int row, int col){
-	return false;
     }
 
     /**Finds the maximum number in the array, assuming that the input array is
@@ -143,15 +92,96 @@ public class WordGrid{
 	return sq;
     }
 
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from left to right, must fit on the WordGrid, and must
+     *have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical location of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
+    public boolean addWordHorizontal(String word,int row, int col){
+	int width=data[0].length;
+	//checks to see that word fits within row
+	if (word.length()+col>width){
+	    return false;
+	}	
+
+	//checks to see if there are overlaps
+	else{
+	    for (int i=col;i<word.length()+col;i++){
+		String letter=word.substring(i-col,i-col+1);
+		String letterAt=String.valueOf(data[row][i]);
+		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		    data[row][i]=word.charAt(i-col);
+		}		
+		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		    //if it's not the same letter and it's not a blank, everything entered is removed)
+		    for (int a=i-1;i>col-1;i--){
+			data[row][a]='_';
+		    }
+		    return false;
+		}
+	    }
+	    return true;
+	}
+    }
+
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from top to bottom, must fit on the WordGrid, and must
+     *have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical location of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
+    public boolean addWordVertical(String word,int row, int col){
+	int height=data.length;
+	//checks to see that word fits within row
+	if (word.length()+row>height){
+	    return false;
+	}	
+
+	//checks to see if there are overlaps
+	else{
+	    for (int i=row;i<word.length()+row;i++){
+		String letter=word.substring(i-row,i-row+1);
+		String letterAt=String.valueOf(data[i][col]);
+		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		    data[i][col]=word.charAt(i-row);
+		}		
+		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		    //if it's not the same letter and it's not a blank, everything entered is removed)
+		    for (int a=i-1;i>row-1;i--){
+			data[a][col]='_';
+		    }
+		    return false;
+		}
+	    }
+	    return true;
+	}
+    }
+
+    /**Attempts to add a given word to the specified position of the WordGrid.
+     *The word is added from top left to bottom right, must fit on the WordGrid, and must
+     *have a corresponding letter to match any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+     *@param row is the vertical location of where you want the word to start.
+     *@param col is the horizontal location of where you want the word to start.
+     *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, then false is returned.
+     */
+    public boolean addWordDiagonal(String word,int row, int col){
+	return false;
+    }
+
     public static void main(String[]args){
-	WordGrid w=new WordGrid(6,7);
-	w.clear();
-	String word1="Happy";
-	String word2="Duhh";
-	//w.addWordHorizontal(word1,3,2);
-	//w.addWordHorizontal(word2,1,4);
-	
-	//System.out.println(w.toString());
+	/*
 	int[][] ary={
 	    {1,2,3},
 	    {6,5,4},
@@ -160,5 +190,17 @@ public class WordGrid{
 	System.out.println(max(ary));
 	System.out.println(rowSum(ary,1));
 	System.out.println(isSquare(ary));
+	*/
+
+	WordGrid w=new WordGrid(6,7);
+	w.clear();
+	String word1="Happy";
+	//String word2="Duhh";
+	String word3="cat";
+	System.out.println(w.addWordHorizontal(word1,3,2));
+	System.out.println(w.addWordVertical(word3,2,3));
+	//System.out.println(w.addWordHorizontal(word2,1,4));	
+	System.out.println(w.toString());
+	
     }
 }
