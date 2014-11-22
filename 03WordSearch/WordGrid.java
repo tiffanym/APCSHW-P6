@@ -96,18 +96,15 @@ public class WordGrid{
      *Index i of the return array contains the sum of elements in row i.
      *@param ary is the array in which you want the sum of one of its rows.
      *@param x is the row whose elements you want the sum of.
-     *@return the row sum for every row with index i of the return array = the sum of elements in row i.
+     *@return memory of new array with sums (use Arrays.toString(allRowSums(<some array>)) to return 
+     *the row sum for every row with index i of the return array = the sum of elements in row i.)
      */
     public static int[] allRowSums(int[][] AR){
-	int[] newA=new int[AR.length];
-	for (int i=0;i<AR.length;i++){
-	    int rowsum=0;
-	    for (int x=0;x<AR[i].length;x++){
-		rowsum+=AR[i][x];
-	    }
-	    newA[i]=rowsum;
+	int[] ary=new int[AR.length];
+	for (int i=0; i<AR.length;i++){
+	    ary[i]=rowSum(AR, i);	   
 	}
-	return newA;
+	return ary;
     }
 
     /**Finds the sum of the elements of a specified row in a given array.
@@ -244,7 +241,7 @@ public class WordGrid{
 	};
 	//System.out.println(max(ary));
 	//System.out.println(rowSum(ary,1));
-	allRowSums(ary);
+	System.out.println(Arrays.toString(allRowSums(ary)));
 	System.out.println(isSquare(ary));
 	
 	/*
