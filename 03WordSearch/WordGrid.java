@@ -258,8 +258,8 @@ public class WordGrid{
 	return false;
     }
 
-    public static void main(String[]args){
-	
+public static void main(String[]args){
+	/*
 	int[][] ary={
 	    {1,2,3},
 	    {6,4},
@@ -267,16 +267,16 @@ public class WordGrid{
 	};
 	int[][] AR={};
 
-	//System.out.println(max(ary));
-	//System.out.println(rowSum(ary,1));
-	//System.out.println(Arrays.toString(allRowSums(ary)));
-	//System.out.println(isSquare(ary));
-	//System.out.println(columnSum(ary,2));
-	//System.out.println(isRowMagic(ary));
+	System.out.println(max(ary));
+	System.out.println(rowSum(ary,1));
+	System.out.println(Arrays.toString(allRowSums(ary)));
+	System.out.println(isSquare(ary));
+	System.out.println(columnSum(ary,2));
+	System.out.println(isRowMagic(ary));
 	System.out.println(isColumnMagic(ary));
 	System.out.println(isColumnMagic(AR));	
+	*/
 	
-	/*
 	WordGrid w=new WordGrid(6,7);
 	w.clear();
 	String word1="Happy";
@@ -286,7 +286,5 @@ public class WordGrid{
 	System.out.println(w.addWordVertical(word3,2,3));
 	//System.out.println(w.addWordHorizontal(word2,1,4));	
 	System.out.println(w.toString());
-	*/
-	
     }
 }
