@@ -181,8 +181,18 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-	int width=data[0].length;
+	//randomized word being added forward or backward direction (meaning word just reversed)
+	int fOrB=(int)(Math.random()*2);
+	if (fOrB==1){
+	    char[] temp=word.toCharArray();
+	    char[] reverse=new char[temp.length];
+	    for (int i=0;i<reverse.length;i++){
+		reverse[i]=temp[temp.length-i-1];
+	    }
+	    word=new String(reverse);
+	}
 	word=word.toUpperCase();
+	int width=data[0].length;
 	//checks to see that word fits within row
 	if (word.length()+col>width){
 	    return false;
@@ -196,6 +206,7 @@ public class WordGrid{
 		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
 		    data[row][i]=word.charAt(i-col);
 		}		
+		
 		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
 		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>col-1;i--){
@@ -203,6 +214,7 @@ public class WordGrid{
 		    }
 		    return false;
 		}
+		
 	    }
 	    return true;
 	}
@@ -219,13 +231,23 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordVertical(String word,int row, int col){
+	//randomized word being added forward or backward direction (meaning word just reversed)
+	int fOrB=(int)(Math.random()*2);
+	if (fOrB==1){
+	    char[] temp=word.toCharArray();
+	    char[] reverse=new char[temp.length];
+	    for (int i=0;i<reverse.length;i++){
+		reverse[i]=temp[temp.length-i-1];
+	    }
+	    word=new String(reverse);
+	}
+	
 	int height=data.length;
 	word=word.toUpperCase();
 	//checks to see that word fits within row
 	if (word.length()+row>height){
 	    return false;
 	}	
-
 	//checks to see if there are overlaps
 	else{
 	    for (int i=row;i<word.length()+row;i++){
@@ -257,6 +279,16 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordDiagonal(String word,int row, int col){
+	//randomized word being added forward or backward direction (meaning word just reversed)
+	int fOrB=(int)(Math.random()*2);
+	if (fOrB==1){
+	    char[] temp=word.toCharArray();
+	    char[] reverse=new char[temp.length];
+	    for (int i=0;i<reverse.length;i++){
+		reverse[i]=temp[temp.length-i-1];
+	    }
+	    word=new String(reverse);
+	}
 	int height=data.length;
 	int width=data[0].length;
 	word=word.toUpperCase();
@@ -277,12 +309,13 @@ public class WordGrid{
 		}
 		else if(!letterAt.equals(letter) && !letterAt.equals(""+'_')){
 		    //if it's not the same letter and it's not a blank everything entered is removed
-		    for (int a=i-1;i>col;i--){
-			data[row][a]='_';
+		    for (int a=col-1;i>col-1;i--){
 			row=row-1;
+			data[row][a]='_';
 		    }
 		    return false;
 		}
+		 
 	    }
 	    return true;
 	}
@@ -333,8 +366,9 @@ public class WordGrid{
 	w.addWordHorizontal(word1,3,2);
 	w.addWordHorizontal(word2,1,4);	
 	w.addWordVertical(word3,2,3);
+	//w.addWordVertical(word3,2,5);
 	w.addWordDiagonal(word4,1,1);
-	w.fillUp();
+	//w.fillUp();
 	System.out.println(w.toString());
     }
 }
