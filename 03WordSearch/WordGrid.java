@@ -92,6 +92,61 @@ public class WordGrid{
 	return sq;
     }
 
+    /**Calculates the row sum for every row and returns each of the values in an array. 
+     *Index i of the return array contains the sum of elements in row i.
+     *@param ary is the array in which you want the sum of one of its rows.
+     *@param x is the row whose elements you want the sum of.
+     *@return the row sum for every row with index i of the return array = the sum of elements in row i.
+     */
+    public static int[] allRowSums(int[][] AR){
+	int[] newA=new int[AR.length];
+	for (int i=0;i<AR.length;i++){
+	    int rowsum=0;
+	    for (int x=0;x<AR[i].length;x++){
+		rowsum+=AR[i][x];
+	    }
+	    newA[i]=rowsum;
+	}
+	return newA;
+    }
+
+    /**Finds the sum of the elements of a specified row in a given array.
+     *Assumes that the inputed row parameter is within the array.
+     *
+     *@param ary is the array in which you want the sum of one of its rows.
+     *@param x is the row whose elements you want the sum of.
+     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     */
+    public static int columnSum(int[][] AR, int x){
+	//"returns the sum of the elements in Column x of AR (careful with rows of different lengths!).";
+	return 0;
+    }
+
+    /**Finds the sum of the elements of a specified row in a given array.
+     *Assumes that the inputed row parameter is within the array.
+     *
+     *@param ary is the array in which you want the sum of one of its rows.
+     *@param x is the row whose elements you want the sum of.
+     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     */
+    public static boolean isRowMagic(int[][] AR){
+	//"checks if the array is row-magic (this means that every row has the same row sum).";
+	return false;
+    }
+
+    /**Finds the sum of the elements of a specified row in a given array.
+     *Assumes that the inputed row parameter is within the array.
+     *
+     *@param ary is the array in which you want the sum of one of its rows.
+     *@param x is the row whose elements you want the sum of.
+     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     */
+
+    public static boolean isColumnMagic(int[][] AR){
+	//"checks if the array is column-magic (this means that every column has the same column sum).";
+	return false;
+    }
+
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
@@ -181,17 +236,18 @@ public class WordGrid{
     }
 
     public static void main(String[]args){
-	/*
+	
 	int[][] ary={
 	    {1,2,3},
 	    {6,5,4},
 	    {7,12,0}
 	};
-	System.out.println(max(ary));
-	System.out.println(rowSum(ary,1));
+	//System.out.println(max(ary));
+	//System.out.println(rowSum(ary,1));
+	allRowSums(ary);
 	System.out.println(isSquare(ary));
-	*/
-
+	
+	/*
 	WordGrid w=new WordGrid(6,7);
 	w.clear();
 	String word1="Happy";
@@ -201,6 +257,7 @@ public class WordGrid{
 	System.out.println(w.addWordVertical(word3,2,3));
 	//System.out.println(w.addWordHorizontal(word2,1,4));	
 	System.out.println(w.toString());
+	*/
 	
     }
 }
