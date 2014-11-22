@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class WordGrid{
-    private char[][]data;
+    protected char[][]data;
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -182,6 +182,7 @@ public class WordGrid{
      */
     public boolean addWordHorizontal(String word,int row, int col){
 	int width=data[0].length;
+	word=word.toUpperCase();
 	//checks to see that word fits within row
 	if (word.length()+col>width){
 	    return false;
@@ -196,7 +197,7 @@ public class WordGrid{
 		    data[row][i]=word.charAt(i-col);
 		}		
 		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		    //if it's not the same letter and it's not a blank, everything entered is removed)
+		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>col-1;i--){
 			data[row][a]='_';
 		    }
@@ -219,6 +220,7 @@ public class WordGrid{
      */
     public boolean addWordVertical(String word,int row, int col){
 	int height=data.length;
+	word=word.toUpperCase();
 	//checks to see that word fits within row
 	if (word.length()+row>height){
 	    return false;
@@ -233,7 +235,7 @@ public class WordGrid{
 		    data[i][col]=word.charAt(i-row);
 		}		
 		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		    //if it's not the same letter and it's not a blank, everything entered is removed)
+		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>row-1;i--){
 			data[a][col]='_';
 		    }
@@ -255,19 +257,64 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordDiagonal(String word,int row, int col){
-	return false;
+	int height=data.length;
+	int width=data[0].length;
+	word=word.toUpperCase();
+	//checks to see that word fits within row and column spaces
+	if (word.length()+row>height || word.length()+col>width){
+	    return false;
+	}	
+
+	//checks to see if there are overlaps
+	else{	  
+	    //OR: for(int i=row;i<word.length()+row;i++){
+	    for (int i=col;i<word.length()+col;i++){
+		String letter=word.substring(i-col,i-col+1);
+		String letterAt=String.valueOf(data[row][i]);
+		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		    data[row][i]=word.charAt(i-col);
+		    row+=1;
+		}
+		else if(!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		    //if it's not the same letter and it's not a blank everything entered is removed
+		    for (int a=i-1;i>col;i--){
+			data[row][a]='_';
+			row=row-1;
+		    }
+		    return false;
+		}
+	    }
+	    return true;
+	}
     }
 
-public static void main(String[]args){
+    /**Fills any empty spots in array with random letters
+     *@param AR is the array you want to fill the empty spaces of.
+     */
+    public void fillUp(){
+	Random r=new Random();
+	if (data.length>0){
+	    for (int row=0;row<data.length;row++){
+		for (int col=0;col<data[row].length;col++){
+		    if (data[row][col]=='_'){
+			char c=(char)(r.nextInt(26)+'a');
+			data[row][col]=Character.toUpperCase(c);
+		    }
+		}
+	    }
+	}
+    }
+
+    public static void main(String[]args){
 	/*
-	int[][] ary={
-	    {1,2,3},
+	  int[][] ary={
+	  {1,2,3},
 	    {6,4},
 	    {7,12,0}
-	};
-	int[][] AR={};
-
-	System.out.println(max(ary));
+	    };
+	    int[][] AR={};
+	    
+	    System.out.println(max(ary));
 	System.out.println(rowSum(ary,1));
 	System.out.println(Arrays.toString(allRowSums(ary)));
 	System.out.println(isSquare(ary));
@@ -280,11 +327,14 @@ public static void main(String[]args){
 	WordGrid w=new WordGrid(6,7);
 	w.clear();
 	String word1="Happy";
-	//String word2="Duhh";
+	String word2="Duhh";
 	String word3="cat";
-	System.out.println(w.addWordHorizontal(word1,3,2));
-	System.out.println(w.addWordVertical(word3,2,3));
-	//System.out.println(w.addWordHorizontal(word2,1,4));	
+	String word4="crab";
+	w.addWordHorizontal(word1,3,2);
+	w.addWordHorizontal(word2,1,4);	
+	w.addWordVertical(word3,2,3);
+	w.addWordDiagonal(word4,1,1);
+	w.fillUp();
 	System.out.println(w.toString());
     }
 }
