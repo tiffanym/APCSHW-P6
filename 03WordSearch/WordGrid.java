@@ -96,7 +96,7 @@ public class WordGrid{
      *Index i of the return array contains the sum of elements in row i.
      *@param ary is the array in which you want the sum of one of its rows.
      *@param x is the row whose elements you want the sum of.
-     *@return memory of new array with sums (use Arrays.toString(allRowSums(<some array>)) to return 
+     *@return memory of new array with sums (use Arrays.toString(allRowSums(some array)) to return 
      *the row sum for every row with index i of the return array = the sum of elements in row i.)
      */
     public static int[] allRowSums(int[][] AR){
@@ -107,15 +107,23 @@ public class WordGrid{
 	return ary;
     }
 
-    /**Finds the sum of the elements of a specified row in a given array.
-     *Assumes that the inputed row parameter is within the array.
+    /**Finds the sum of the elements of a specified column in a given array.
+     *Assumes that the inputed column parameter is within the array.
      *
-     *@param ary is the array in which you want the sum of one of its rows.
-     *@param x is the row whose elements you want the sum of.
-     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     *@param ary is the array in which you want the sum of one of its columns.
+     *@param x is the column whose elements you want the sum of.
+     *@return the sum of the elements in Column x of AR OR 0 if the array has a length of 0 (array is null)
      */
     public static int columnSum(int[][] AR, int x){
-	//"returns the sum of the elements in Column x of AR (careful with rows of different lengths!).";
+	if (AR.length>0){
+	    int sum=0;
+	    for (int i=0;i<AR.length;i++){
+		if (AR[i].length>x){
+		    sum+=AR[i][x];
+		}
+	    }
+	    return sum;
+	}
 	return 0;
     }
 
@@ -236,13 +244,14 @@ public class WordGrid{
 	
 	int[][] ary={
 	    {1,2,3},
-	    {6,5,4},
+	    {6,4},
 	    {7,12,0}
 	};
 	//System.out.println(max(ary));
 	//System.out.println(rowSum(ary,1));
-	System.out.println(Arrays.toString(allRowSums(ary)));
-	System.out.println(isSquare(ary));
+	//System.out.println(Arrays.toString(allRowSums(ary)));
+	//System.out.println(isSquare(ary));
+	System.out.println(columnSum(ary,2));
 	
 	/*
 	WordGrid w=new WordGrid(6,7);
