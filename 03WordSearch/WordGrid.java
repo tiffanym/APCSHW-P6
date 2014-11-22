@@ -127,29 +127,47 @@ public class WordGrid{
 	return 0;
     }
 
-    /**Finds the sum of the elements of a specified row in a given array.
-     *Assumes that the inputed row parameter is within the array.
+    /**Checks if the array is row-magic (if every row has the same row sum);
      *
-     *@param ary is the array in which you want the sum of one of its rows.
-     *@param x is the row whose elements you want the sum of.
-     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     *@param AR is the array which you're checking for row-magic.
+     *@return true if the array is row-magic or has length 0 and false otherwise.
      */
     public static boolean isRowMagic(int[][] AR){
-	//"checks if the array is row-magic (this means that every row has the same row sum).";
-	return false;
+	if (AR.length>0){
+	    int defrm=rowSum(AR,0);
+	    for (int i=1;i<AR.length;i++){
+		if (rowSum(AR,i)!=defrm){
+		    return false;
+		}
+	    }
+	}
+	return true;
     }
 
-    /**Finds the sum of the elements of a specified row in a given array.
-     *Assumes that the inputed row parameter is within the array.
+    /**Checks if the array is column-magic (this means that every column has the same column sum)
+     *Note: Rows can have different lengths
      *
-     *@param ary is the array in which you want the sum of one of its rows.
-     *@param x is the row whose elements you want the sum of.
-     *@return the sum of the row you specify OR 0 if the array has a length of 0 (array is null)
+     *@param AR is the array which you're checking for column-magic.
+     *@return true if the array is column-magic or has length 0 and false otherwise.
      */
-
     public static boolean isColumnMagic(int[][] AR){
-	//"checks if the array is column-magic (this means that every column has the same column sum).";
-	return false;
+	if(AR.length>0){
+	    //checks for maximum width
+	    int width=AR[0].length;
+	    for (int i=1;i<AR.length;i++){
+		if (AR[i].length>width){
+		    width=AR[i].length;
+		}
+	    }
+	    //checks for column magic
+	    int defcm=columnSum(AR,0);
+	    for (int i=0;i<width;i++){
+		if (columnSum(AR,i)!=defcm){
+		    return false;
+		}
+	    }
+	}
+	return true;	
     }
 
     /**Attempts to add a given word to the specified position of the WordGrid.
@@ -247,11 +265,16 @@ public class WordGrid{
 	    {6,4},
 	    {7,12,0}
 	};
+	int[][] AR={};
+
 	//System.out.println(max(ary));
 	//System.out.println(rowSum(ary,1));
 	//System.out.println(Arrays.toString(allRowSums(ary)));
 	//System.out.println(isSquare(ary));
-	System.out.println(columnSum(ary,2));
+	//System.out.println(columnSum(ary,2));
+	//System.out.println(isRowMagic(ary));
+	System.out.println(isColumnMagic(ary));
+	System.out.println(isColumnMagic(AR));	
 	
 	/*
 	WordGrid w=new WordGrid(6,7);
