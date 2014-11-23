@@ -212,7 +212,12 @@ public class WordGrid{
 		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
 		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>col-1;i--){
-			data[row][a]='_';
+			if (a>-1){
+			    data[row][a]='_';
+			}
+			else{
+			    break;
+			}
 		    }
 		    return false;
 		}
@@ -261,7 +266,12 @@ public class WordGrid{
 		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
 		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>row-1;i--){
-			data[a][col]='_';
+			if (a>-1){
+			    data[a][col]='_';
+			}
+			else{
+			    break;
+			}
 		    }
 		    return false;
 		}
@@ -301,19 +311,32 @@ public class WordGrid{
 
 	//checks to see if there are overlaps
 	else{	  
+	    int rowCurrent=row;
 	    //OR: for(int i=row;i<word.length()+row;i++){
 	    for (int i=col;i<word.length()+col;i++){
 		String letter=word.substring(i-col,i-col+1);
-		String letterAt=String.valueOf(data[row][i]);
+		String letterAt=String.valueOf(data[rowCurrent][i]);
 		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
-		    data[row][i]=word.charAt(i-col);
-		    row+=1;
+		    data[rowCurrent][i]=word.charAt(i-col);
+		    rowCurrent+=1;
 		}
 		else if(!letterAt.equals(letter) && !letterAt.equals(""+'_')){
 		    //if it's not the same letter and it's not a blank everything entered is removed
+		    /*
 		    for (int a=col-1;i>col-1;i--){
 			row=row-1;
-			data[row][a]='_';
+			if (row>-1 && a>-1){
+			    data[row][a]='_';
+			}
+			else{
+			    break;
+			}
+		    }
+		    */
+		    rowCurrent=row;
+		    for (int a=col;a<i;a++){
+			data[rowCurrent][a]='_';
+			rowCurrent+=1;			
 		    }
 		    return false;
 		}
@@ -358,7 +381,7 @@ public class WordGrid{
 	System.out.println(isColumnMagic(ary));
 	System.out.println(isColumnMagic(AR));	
 	*/
-	/*
+	
 	WordGrid w=new WordGrid(6,7);
 	w.clear();
 	String word1="Happy";
@@ -372,7 +395,7 @@ public class WordGrid{
 	w.addWordDiagonal(word4,1,1);
 	//w.fillUp();
 	System.out.println(w.toString());
-	*/
+	
 
 	//creating File instance to refrence text file in Java
 	File text =new File("/home/tiffany/Desktop/AP-CS/APCSHW-P6/03WordSearch/WordGridWords.txt");	
@@ -389,6 +412,32 @@ public class WordGrid{
 	    System.out.println("Could not read from file");
 	}	
 	//System.out.println(dict.toString());
-	
+	/*
+	WordGrid w=new WordGrid(20,20);
+	for (int i=0;i<10;i++){
+	    int randWordIndex=(int)(Math.random()*100);
+	    int randMethod=(int)(Math.random()*3)+1;
+	    int row=(int)(Math.random()*20);
+	    int col=(int)(Math.random()*20);
+	    switch (randMethod){
+	    case 1:
+		if(!w.addWordHorizontal(dict.get(randWordIndex),row,col)){
+		    randWordIndex=(int)(Math.random()*100)+1;
+		    w.addWordHorizontal(dict.get(randWordIndex),row,col);
+		}
+	    case 2:
+		if(!w.addWordVertical(dict.get(randWordIndex),row,col)){
+		    randWordIndex=(int)(Math.random()*100)+1;
+		    w.addWordVertical(dict.get(randWordIndex),row,col);
+		}
+	    case 3:
+		if(!w.addWordDiagonal(dict.get(randWordIndex),row,col)){
+		    randWordIndex=(int)(Math.random()*100)+1;
+		    w.addWordDiagonal(dict.get(randWordIndex),row,col);
+		}		
+	    }
+	}
+	System.out.println(w.toString());
+	*/
     }
 }
