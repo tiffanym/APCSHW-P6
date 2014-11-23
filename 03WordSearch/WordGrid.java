@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class WordGrid{
     protected char[][]data;
@@ -356,7 +358,7 @@ public class WordGrid{
 	System.out.println(isColumnMagic(ary));
 	System.out.println(isColumnMagic(AR));	
 	*/
-	
+	/*
 	WordGrid w=new WordGrid(6,7);
 	w.clear();
 	String word1="Happy";
@@ -370,5 +372,23 @@ public class WordGrid{
 	w.addWordDiagonal(word4,1,1);
 	//w.fillUp();
 	System.out.println(w.toString());
+	*/
+
+	//creating File instance to refrence text file in Java
+	File text =new File("/home/tiffany/Desktop/AP-CS/APCSHW-P6/03WordSearch/WordGridWords.txt");	
+	//Reads words into an ArrayList<String>
+	ArrayList<String> dict= new ArrayList<String>();
+	try{
+	    Scanner scnr=new Scanner(text);
+	    while(scnr.hasNextLine()){
+		String word=scnr.nextLine();
+		dict.add(word);
+	    }
+	}
+	catch(FileNotFoundException e){
+	    System.out.println("Could not read from file");
+	}	
+	//System.out.println(dict.toString());
+	
     }
 }
