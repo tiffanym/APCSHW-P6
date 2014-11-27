@@ -33,17 +33,23 @@ public class Demo3{
     //How can you verify this?
     //Your toString in Warrior doesn't help us, what can you do?
 
+    public int compareTo (Warrior other){
+	int me= getHP();
+	int thing= other.getHP();
+	return (me-thing);
+    }
     public static void main(String[]args){
 	Warrior[]people;
 
 	people = new Warrior[15];
 	for(int i = 0; i < people.length; i++){
 	    people[i] = new Warrior(""+(char)('A'+i)+"onan");
+	    people[i] = Warrior.getName();
 	}
 
 	System.out.println(Arrays.toString(people));
-	Arrays.sort(people);
-	System.out.println(Arrays.toString(people));
+	//Arrays.sort(people);
+	//System.out.println(Arrays.toString(people));
 
 
     }
