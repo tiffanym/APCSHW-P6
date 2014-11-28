@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 
 public class WordGrid{
     protected char[][]data;
+    protected Random r= new Random();
+    protected ArrayList<String> dict=new ArrayList<String>(); //all words
+    protected ArrayList<String> wordList=new ArrayList<String>(); //words used in WordGrid
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -12,11 +15,16 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 	if (rows>4 && cols>4){
-	    data= new char[rows][cols];
+	    data= new char[rows][cols];	    
 	}
 	else{
 	    data= new char[10][10];
 	}
+	clear();
+    }
+
+    public WordGrid(){
+	data=new char[10][10];
 	clear();
     }
 
@@ -176,10 +184,6 @@ public class WordGrid{
 	}
 	return true;	
     }
-
-
-
-    //****Where all the much important main stuff of the word grid are
     
     /**Checks if the word fits in the given row, column, and direction AND does not overlap
      *
@@ -283,5 +287,68 @@ public class WordGrid{
 	}
     }
 
+
+    /**Adds 10 words randomly from a given list of words
+     *
+     *@param allWords the dictionary/word list the words are from
+     */
+    public void addManyWordsToList (ArrayList<String> allWords){
+	int maxWords=12;
+	for (int i=0;i<maxWords;i++){
+	    int wordIndex=(int)(Math.random()*allWords.size());	    	    
+	    int row=(int)(Math.random()*data.length);
+	    int col=(int)(Math.random()*data[0].length);
+	    int dx=(int)(Math.random()*3)-1;
+	    int dy=(int)(Math.random()*3)-1;	    
+	    if (!addWord(allWords.get(wordIndex),row,col,dx,dy)){
+		if (wordIndex>0 && wordIndex+5<allWords.size()){
+		    wordIndex+=5;
+		}
+	    }
+	    wordList.add(allWords.get(wordIndex));	    
+	    addWord(allWords.get(wordIndex),row,col,dx,dy);	    
+	}
+    }
+
+    /**Tells you the words used in the WordGrid
+     *
+     *@return a formatted string of text that has several words per line
+     */
+    public String wordsInPuzzle(){
+	String s="";
+	for (int i=0;i<wordList.size();i++){
+	    if (i%4==0){
+		s+="\n";		
+	    }
+	    s+=wordList.get(i)+"          ";
+	}
+	return s;
+    }
+
+    /**Loads word from a file and fills in empty spaces in wordGrid if asked to
+     *
+     *@param fileName tells WordGrid from which file to read all of the words
+     *@param fillRandomLetters determines if you need to fill it up or not
+     */
+    public void loadWordsFromFile(String fileName, boolean fillRandomLetters){
+	File text=new File(fileName);	
+	try{
+	    Scanner scnr = new Scanner (text);
+	    int lineNumber=1;
+	    while (scnr.hasNextLine()){
+		String line=scnr.nextLine();
+		dict.add(line);
+		lineNumber++;
+	    }
+	}catch(Exception e){
+	    e.printStackTrace();
+	}
+	
+	if (fillRandomLetters){
+	    fillUp();
+	}
+	
+	addManyWordsToList(dict);
+    }
 
 }
