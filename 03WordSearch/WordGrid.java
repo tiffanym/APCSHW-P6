@@ -12,6 +12,7 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 	data= new char[rows][cols];
+	clear();
     }
 
     /**Set all values in the WordGrid to spaces ' '*/
@@ -172,17 +173,100 @@ public class WordGrid{
 	return true;	
     }
 
+
+
+    //****Where all the much important main stuff of the word grid are
+    
+    /**Checks if the word fits in the given row, column, and direction
+     *
+     *@param word is any text to be added to the word grid
+     *@param row is the row you want the word to start in
+     *@param col is the column you want the word to start in
+     *@param dx +1 (or just 1) is to the right, -1 is to the left, 0 means no x coordinate
+     *@param dy +1 (or just 1) is down, -1 is up, 0 means no y coordinate
+     *@return true when the word fits and the direction exists, false otherwise
+     */
+    public boolean checkWord(String word, int row, int col, int dx, int dy){
+	if ((dx==0 && dy==0)||
+	    dx*word.length()+col+1<0 || dx*word.length()+col>data[0].length||
+	    dy*word.length()+row+1<0 || dy*word.length()+row>data.length
+	    ){
+	    return false;
+	}
+	else{
+	    return true;
+	}
+    }
+
+    /**Checks if there is overlap, that is, if the letter at a given spot 
+     *is different from the letter wordgrid is about to put in
+     *
+     *@param letter is what you're going to put in and are checking to see if it's different
+     *from what's there
+     *@param row is the row the letter is in
+     *@param col is the column the letter is in
+     *@return true when there is an overlap, false otherwise
+     */
+    public boolean checkOverlap(String letter, int row, int col){
+	//String letter=word.substring(i-col,i-col+1);// returns a string
+	String letterAt=String.valueOf(data[row][col]);
+	if (letter.equals(letterAt) || letterAt.equals(""+'_')){
+	    return false;
+	}
+	else{
+	    return true;
+	}     
+    }
+
+    public boolean addWord(String word,int row, int col, int dx, int dy){
+	if (checkWord(word,row,col,dx,dy)){
+	    for (int i=col;i<word.length()+col;i++){
+		String letter=word.substring(i-col,i-col+1);
+		//String letterAt=String.valueOf(data[row][i]);
+		//if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		//    data[row][i]=word.charAt(i-col);
+		//}		
+		if (!checkOverlap(letter,row,i)){
+		    data[row][i]=word.charAt(i-col);
+		}
+		
+		//else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		else{
+		    //if it's not the same letter and it's not a blank, everything entered is removed
+		    for (int a=i-1;i>col-1;i--){
+			if (a>-1){
+			    data[row][a]='_';
+			}
+			else{
+			    break;
+			}
+		    }
+		    return false;
+		}
+		
+	    }
+	    return true;
+	}
+	else{
+	    return false;
+	}
+    }
+
+
+
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical location of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
+     *@param word is any text to be added to the word grid
+     *@param row is the row you want the word to start in
+     *@param col is the column you want the word to start in
+     *@param dx +1 (or just 1) is to the left, -1 is to the right, 0 means no x coordinate
+     *@param dy +1 (or just 1) is up, -1 is down, 0 means no y coordinate
      *@return true when the word is added successfully. When the word doesn't fit,
      *or there are overlapping letters that do not match, then false is returned.
      */
-    public boolean addWordHorizontal(String word,int row, int col){
+    public boolean addWordHorizontal(String word,int row, int col, int dx, int dy){
+	/*
 	//randomized word being added forward or backward direction (meaning word just reversed)
 	int fOrB=(int)(Math.random()*2);
 	if (fOrB==1){
@@ -199,17 +283,24 @@ public class WordGrid{
 	if (word.length()+col>width){
 	    return false;
 	}	
-
+	*/
+	if (checkWord(word,row,col,dx,dy)){
+	    
+	    //}
 	//checks to see if there are overlaps
-	else{
+	//else{
 	    for (int i=col;i<word.length()+col;i++){
 		String letter=word.substring(i-col,i-col+1);
-		String letterAt=String.valueOf(data[row][i]);
-		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		//String letterAt=String.valueOf(data[row][i]);
+		//if (letterAt.equals(letter) || letterAt.equals(""+'_')){
+		//    data[row][i]=word.charAt(i-col);
+		//}		
+		if (!checkOverlap(letter,row,i)){
 		    data[row][i]=word.charAt(i-col);
-		}		
+		}
 		
-		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		//else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
+		else{
 		    //if it's not the same letter and it's not a blank, everything entered is removed
 		    for (int a=i-1;i>col-1;i--){
 			if (a>-1){
@@ -224,6 +315,9 @@ public class WordGrid{
 		
 	    }
 	    return true;
+	}
+	else{
+	    return false;
 	}
     }
 
@@ -363,81 +457,5 @@ public class WordGrid{
 	}
     }
 
-    public static void main(String[]args){
-	/*
-	  int[][] ary={
-	  {1,2,3},
-	    {6,4},
-	    {7,12,0}
-	    };
-	    int[][] AR={};
-	    
-	    System.out.println(max(ary));
-	System.out.println(rowSum(ary,1));
-	System.out.println(Arrays.toString(allRowSums(ary)));
-	System.out.println(isSquare(ary));
-	System.out.println(columnSum(ary,2));
-	System.out.println(isRowMagic(ary));
-	System.out.println(isColumnMagic(ary));
-	System.out.println(isColumnMagic(AR));	
-	*/
-	
-	WordGrid w=new WordGrid(6,7);
-	w.clear();
-	String word1="Happy";
-	String word2="Duhh";
-	String word3="cat";
-	String word4="crab";
-	w.addWordHorizontal(word1,3,2);
-	w.addWordHorizontal(word2,1,4);	
-	w.addWordVertical(word3,2,3);
-	//w.addWordVertical(word3,2,5);
-	w.addWordDiagonal(word4,1,1);
-	//w.fillUp();
-	System.out.println(w.toString());
-	
 
-	//creating File instance to refrence text file in Java
-	File text =new File("/home/tiffany/Desktop/AP-CS/APCSHW-P6/03WordSearch/WordGridWords.txt");	
-	//Reads words into an ArrayList<String>
-	ArrayList<String> dict= new ArrayList<String>();
-	try{
-	    Scanner scnr=new Scanner(text);
-	    while(scnr.hasNextLine()){
-		String word=scnr.nextLine();
-		dict.add(word);
-	    }
-	}
-	catch(FileNotFoundException e){
-	    System.out.println("Could not read from file");
-	}	
-	//System.out.println(dict.toString());
-	/*
-	WordGrid w=new WordGrid(20,20);
-	for (int i=0;i<10;i++){
-	    int randWordIndex=(int)(Math.random()*100);
-	    int randMethod=(int)(Math.random()*3)+1;
-	    int row=(int)(Math.random()*20);
-	    int col=(int)(Math.random()*20);
-	    switch (randMethod){
-	    case 1:
-		if(!w.addWordHorizontal(dict.get(randWordIndex),row,col)){
-		    randWordIndex=(int)(Math.random()*100)+1;
-		    w.addWordHorizontal(dict.get(randWordIndex),row,col);
-		}
-	    case 2:
-		if(!w.addWordVertical(dict.get(randWordIndex),row,col)){
-		    randWordIndex=(int)(Math.random()*100)+1;
-		    w.addWordVertical(dict.get(randWordIndex),row,col);
-		}
-	    case 3:
-		if(!w.addWordDiagonal(dict.get(randWordIndex),row,col)){
-		    randWordIndex=(int)(Math.random()*100)+1;
-		    w.addWordDiagonal(dict.get(randWordIndex),row,col);
-		}		
-	    }
-	}
-	System.out.println(w.toString());
-	*/
-    }
 }
