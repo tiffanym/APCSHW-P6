@@ -26,13 +26,14 @@ public class Driver{
 	String word2="Duhh";
 	String word3="cat";
 	String word4="crab";
-	//w.addWordHorizontal(word1,3,2,,1);
+	//w.addWordHorizontal(word1,3,2,1);
 	//w.addWordHorizontal(word2,1,4,0,1);	
 	//w.addWordVertical(word3,2,3);
 	//w.addWordVertical(word3,2,5);
 	//w.addWordDiagonal(word4,1,1);
 	//w.fillUp();
-	System.out.println(w.checkWord(word2,3,3,-1,0));
+	System.out.println(w.addWord(word1,0,0,1,0));
+	System.out.println(w.addWord(word2,3,2,1,0));
 	System.out.println(w.toString());
 	
 

@@ -7,11 +7,16 @@ public class WordGrid{
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
-     *@param row is the starting height of the WordGrid
-     *@param col is the starting width of the WordGrid
+     *@param rows is the starting height of the WordGrid
+     *@param cols is the starting width of the WordGrid
      */
     public WordGrid(int rows,int cols){
-	data= new char[rows][cols];
+	if (rows>4 && cols>4){
+	    data= new char[rows][cols];
+	}
+	else{
+	    data= new char[10][10];
+	}
 	clear();
     }
 
@@ -97,8 +102,7 @@ public class WordGrid{
 
     /**Calculates the row sum for every row and returns each of the values in an array. 
      *Index i of the return array contains the sum of elements in row i.
-     *@param ary is the array in which you want the sum of one of its rows.
-     *@param x is the row whose elements you want the sum of.
+     *@param AR is the array in which you want the sum of one of its rows.
      *@return memory of new array with sums (use Arrays.toString(allRowSums(some array)) to return 
      *the row sum for every row with index i of the return array = the sum of elements in row i.)
      */
@@ -113,7 +117,7 @@ public class WordGrid{
     /**Finds the sum of the elements of a specified column in a given array.
      *Assumes that the inputed column parameter is within the array.
      *
-     *@param ary is the array in which you want the sum of one of its columns.
+     *@param AR is the array in which you want the sum of one of its columns.
      *@param x is the column whose elements you want the sum of.
      *@return the sum of the elements in Column x of AR OR 0 if the array has a length of 0 (array is null)
      */
@@ -177,23 +181,38 @@ public class WordGrid{
 
     //****Where all the much important main stuff of the word grid are
     
-    /**Checks if the word fits in the given row, column, and direction
+    /**Checks if the word fits in the given row, column, and direction AND does not overlap
      *
      *@param word is any text to be added to the word grid
      *@param row is the row you want the word to start in
      *@param col is the column you want the word to start in
      *@param dx +1 (or just 1) is to the right, -1 is to the left, 0 means no x coordinate
      *@param dy +1 (or just 1) is down, -1 is up, 0 means no y coordinate
-     *@return true when the word fits and the direction exists, false otherwise
+     *@return true when the word fits, the direction exists, and there is no overlap
+     *when the word is added; false otherwise
      */
     public boolean checkWord(String word, int row, int col, int dx, int dy){
 	if ((dx==0 && dy==0)||
+	    Math.abs(dx)>1 || Math.abs(dy)>1 ||
 	    dx*word.length()+col+1<0 || dx*word.length()+col>data[0].length||
 	    dy*word.length()+row+1<0 || dy*word.length()+row>data.length
 	    ){
 	    return false;
 	}
 	else{
+	    for (int i=0;i<word.length();i++){
+		String letter=word.substring(i,i+1);		
+		if (checkOverlap(letter,row,col) ||
+		    col<0 || col>data[0].length||
+		    row<0 || row>data.length
+		    ){
+		    return false;
+		}
+		else{
+		    row+=dy;
+		    col+=dx;
+		}
+	    }
 	    return true;
 	}
     }
@@ -208,7 +227,6 @@ public class WordGrid{
      *@return true when there is an overlap, false otherwise
      */
     public boolean checkOverlap(String letter, int row, int col){
-	//String letter=word.substring(i-col,i-col+1);// returns a string
 	String letterAt=String.valueOf(data[row][col]);
 	if (letter.equals(letterAt) || letterAt.equals(""+'_')){
 	    return false;
@@ -218,230 +236,38 @@ public class WordGrid{
 	}     
     }
 
-    public boolean addWord(String word,int row, int col, int dx, int dy){
-	if (checkWord(word,row,col,dx,dy)){
-	    for (int i=col;i<word.length()+col;i++){
-		String letter=word.substring(i-col,i-col+1);
-		//String letterAt=String.valueOf(data[row][i]);
-		//if (letterAt.equals(letter) || letterAt.equals(""+'_')){
-		//    data[row][i]=word.charAt(i-col);
-		//}		
-		if (!checkOverlap(letter,row,i)){
-		    data[row][i]=word.charAt(i-col);
-		}
-		
-		//else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		else{
-		    //if it's not the same letter and it's not a blank, everything entered is removed
-		    for (int a=i-1;i>col-1;i--){
-			if (a>-1){
-			    data[row][a]='_';
-			}
-			else{
-			    break;
-			}
-		    }
-		    return false;
-		}
-		
-	    }
-	    return true;
-	}
-	else{
-	    return false;
-	}
-    }
-
-
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from left to right, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
+    /**Adds a word to the WordGrid
+     *<br>dx dy Direction
+     *<br>0 -1 N
+     *<br>-1 -1 NW    
+     *<br>-1 0 W
+     *<br>-1 1 SW
+     *<br>0 1 S
+     *<br>1 1 SE
+     *<br>1 0 E
+     *<br>1 -1 NE
      *@param word is any text to be added to the word grid
      *@param row is the row you want the word to start in
      *@param col is the column you want the word to start in
-     *@param dx +1 (or just 1) is to the left, -1 is to the right, 0 means no x coordinate
-     *@param dy +1 (or just 1) is up, -1 is down, 0 means no y coordinate
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
+     *@param dx +1 (or just 1) is to the right, -1 is to the left, 0 means no x coordinate
+     *@param dy +1 (or just 1) is down, -1 is up, 0 means no y coordinate
+     *@return true when the word fits, the direction exists, and there is no overlap
+     *when the word is added; false otherwise
      */
-    public boolean addWordHorizontal(String word,int row, int col, int dx, int dy){
-	/*
-	//randomized word being added forward or backward direction (meaning word just reversed)
-	int fOrB=(int)(Math.random()*2);
-	if (fOrB==1){
-	    char[] temp=word.toCharArray();
-	    char[] reverse=new char[temp.length];
-	    for (int i=0;i<reverse.length;i++){
-		reverse[i]=temp[temp.length-i-1];
-	    }
-	    word=new String(reverse);
-	}
-	word=word.toUpperCase();
-	int width=data[0].length;
-	//checks to see that word fits within row
-	if (word.length()+col>width){
-	    return false;
-	}	
-	*/
+    public boolean addWord(String word,int row, int col, int dx, int dy){
 	if (checkWord(word,row,col,dx,dy)){
+	    for (int i=0;i<word.length();i++){
+		data[row][col]=Character.toUpperCase(word.charAt(i));
+		row+=dy;
+		col+=dx;		
+	    }
 	    
-	    //}
-	//checks to see if there are overlaps
-	//else{
-	    for (int i=col;i<word.length()+col;i++){
-		String letter=word.substring(i-col,i-col+1);
-		//String letterAt=String.valueOf(data[row][i]);
-		//if (letterAt.equals(letter) || letterAt.equals(""+'_')){
-		//    data[row][i]=word.charAt(i-col);
-		//}		
-		if (!checkOverlap(letter,row,i)){
-		    data[row][i]=word.charAt(i-col);
-		}
-		
-		//else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		else{
-		    //if it's not the same letter and it's not a blank, everything entered is removed
-		    for (int a=i-1;i>col-1;i--){
-			if (a>-1){
-			    data[row][a]='_';
-			}
-			else{
-			    break;
-			}
-		    }
-		    return false;
-		}
-		
-	    }
 	    return true;
 	}
-	else{
-	    return false;
-	}
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top to bottom, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical location of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordVertical(String word,int row, int col){
-	//randomized word being added forward or backward direction (meaning word just reversed)
-	int fOrB=(int)(Math.random()*2);
-	if (fOrB==1){
-	    char[] temp=word.toCharArray();
-	    char[] reverse=new char[temp.length];
-	    for (int i=0;i<reverse.length;i++){
-		reverse[i]=temp[temp.length-i-1];
-	    }
-	    word=new String(reverse);
-	}
-	
-	int height=data.length;
-	word=word.toUpperCase();
-	//checks to see that word fits within row
-	if (word.length()+row>height){
-	    return false;
-	}	
-	//checks to see if there are overlaps
-	else{
-	    for (int i=row;i<word.length()+row;i++){
-		String letter=word.substring(i-row,i-row+1);
-		String letterAt=String.valueOf(data[i][col]);
-		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
-		    data[i][col]=word.charAt(i-row);
-		}		
-		else if (!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		    //if it's not the same letter and it's not a blank, everything entered is removed
-		    for (int a=i-1;i>row-1;i--){
-			if (a>-1){
-			    data[a][col]='_';
-			}
-			else{
-			    break;
-			}
-		    }
-		    return false;
-		}
-	    }
-	    return true;
-	}
-    }
-
-    /**Attempts to add a given word to the specified position of the WordGrid.
-     *The word is added from top left to bottom right, must fit on the WordGrid, and must
-     *have a corresponding letter to match any letters that it overlaps.
-     *
-     *@param word is any text to be added to the word grid.
-     *@param row is the vertical location of where you want the word to start.
-     *@param col is the horizontal location of where you want the word to start.
-     *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
-     */
-    public boolean addWordDiagonal(String word,int row, int col){
-	//randomized word being added forward or backward direction (meaning word just reversed)
-	int fOrB=(int)(Math.random()*2);
-	if (fOrB==1){
-	    char[] temp=word.toCharArray();
-	    char[] reverse=new char[temp.length];
-	    for (int i=0;i<reverse.length;i++){
-		reverse[i]=temp[temp.length-i-1];
-	    }
-	    word=new String(reverse);
-	}
-	int height=data.length;
-	int width=data[0].length;
-	word=word.toUpperCase();
-	//checks to see that word fits within row and column spaces
-	if (word.length()+row>height || word.length()+col>width){
-	    return false;
-	}	
-
-	//checks to see if there are overlaps
-	else{	  
-	    int rowCurrent=row;
-	    //OR: for(int i=row;i<word.length()+row;i++){
-	    for (int i=col;i<word.length()+col;i++){
-		String letter=word.substring(i-col,i-col+1);
-		String letterAt=String.valueOf(data[rowCurrent][i]);
-		if (letterAt.equals(letter) || letterAt.equals(""+'_')){
-		    data[rowCurrent][i]=word.charAt(i-col);
-		    rowCurrent+=1;
-		}
-		else if(!letterAt.equals(letter) && !letterAt.equals(""+'_')){
-		    //if it's not the same letter and it's not a blank everything entered is removed
-		    /*
-		    for (int a=col-1;i>col-1;i--){
-			row=row-1;
-			if (row>-1 && a>-1){
-			    data[row][a]='_';
-			}
-			else{
-			    break;
-			}
-		    }
-		    */
-		    rowCurrent=row;
-		    for (int a=col;a<i;a++){
-			data[rowCurrent][a]='_';
-			rowCurrent+=1;			
-		    }
-		    return false;
-		}
-		 
-	    }
-	    return true;
-	}
+	return false;
     }
 
     /**Fills any empty spots in array with random letters
-     *@param AR is the array you want to fill the empty spaces of.
      */
     public void fillUp(){
 	Random r=new Random();
