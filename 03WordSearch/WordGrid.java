@@ -20,6 +20,7 @@ public class WordGrid{
 	else{
 	    data= new char[10][10];
 	}
+	r.setSeed(1234);
 	clear();
     }
 
@@ -204,6 +205,7 @@ public class WordGrid{
 	    return false;
 	}
 	else{
+	    word=word.toUpperCase();
 	    for (int i=0;i<word.length();i++){
 		String letter=word.substring(i,i+1);		
 		if (checkOverlap(letter,row,col) ||
@@ -259,6 +261,7 @@ public class WordGrid{
      *when the word is added; false otherwise
      */
     public boolean addWord(String word,int row, int col, int dx, int dy){
+	word=word.toUpperCase();
 	if (checkWord(word,row,col,dx,dy)){
 	    for (int i=0;i<word.length();i++){
 		data[row][col]=Character.toUpperCase(word.charAt(i));
@@ -287,26 +290,28 @@ public class WordGrid{
 	}
     }
 
+    /**Mutator that changes the random seed of your Random object. 
+     *
+     *@param seed the initial seed
+     */
+    public void setSeed(long seed){
+	r.setSeed(seed);
+    }
 
     /**Adds 10 words randomly from a given list of words
      *
      *@param allWords the dictionary/word list the words are from
      */
     public void addManyWordsToList (ArrayList<String> allWords){
-	int maxWords=12;
+	int maxWords=28;
 	for (int i=0;i<maxWords;i++){
-	    int wordIndex=(int)(Math.random()*allWords.size());	    	    
+	    int index=(int)(Math.random()*dict.size());
 	    int row=(int)(Math.random()*data.length);
 	    int col=(int)(Math.random()*data[0].length);
 	    int dx=(int)(Math.random()*3)-1;
-	    int dy=(int)(Math.random()*3)-1;	    
-	    if (!addWord(allWords.get(wordIndex),row,col,dx,dy)){
-		if (wordIndex>0 && wordIndex+5<allWords.size()){
-		    wordIndex+=5;
-		}
-	    }
-	    wordList.add(allWords.get(wordIndex));	    
-	    addWord(allWords.get(wordIndex),row,col,dx,dy);	    
+	    int dy=(int)(Math.random()*3)-1;
+	    addWord(allWords.get(index),row,col,dx,dy);	    
+	    wordList.add(allWords.get(index));	    
 	}
     }
 
@@ -320,7 +325,7 @@ public class WordGrid{
 	    if (i%4==0){
 		s+="\n";		
 	    }
-	    s+=wordList.get(i)+"          ";
+	    s+=wordList.get(i).toUpperCase()+"          ";
 	}
 	return s;
     }
@@ -335,11 +340,23 @@ public class WordGrid{
 	try{
 	    Scanner scnr = new Scanner (text);
 	    int lineNumber=1;
+	    ArrayList<String> temp=new ArrayList<String>();
 	    while (scnr.hasNextLine()){
 		String line=scnr.nextLine();
-		dict.add(line);
+		temp.add(line);
 		lineNumber++;
 	    }
+	    
+	    for (int i=0;i<temp.size();i++){		
+		int row=(int)(Math.random()*data.length);
+		int col=(int)(Math.random()*data[0].length);
+		int dx=(int)(Math.random()*3)-1;
+		int dy=(int)(Math.random()*3)-1;
+		if (addWord(temp.get(i),row,col,dx,dy)){
+		    dict.add(temp.get(i));
+		}
+	    }
+	    
 	}catch(Exception e){
 	    e.printStackTrace();
 	}
@@ -347,7 +364,7 @@ public class WordGrid{
 	if (fillRandomLetters){
 	    fillUp();
 	}
-	
+
 	addManyWordsToList(dict);
     }
 

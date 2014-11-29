@@ -4,7 +4,8 @@ import java.io.*;
 public class Driver{  
     public static void main(String[]args){
 	WordGrid w=new WordGrid();
-	if (args.length>0){
+	boolean fillRandomLetters=true;
+	if (args.length==2){
 	    try{
 		int rows=Integer.parseInt(args[0]);
 		int cols=Integer.parseInt(args[1]);
@@ -14,18 +15,15 @@ public class Driver{
 		System.exit(1);
 	    }
 	}
-	
-	boolean fillRandomLetters=true;
-	if (args.length==4){
+	if(args.length==3){
+	    w.setSeed(args[2]);
+	}
+	if(args.length==4){
 	    fillRandomLetters =!args[3].equals("1");
 	}
 	
-	//if (){
-	    //some random seed stuff going on here
-	//}
-	w.loadWordsFromFile("WordGridWords.txt",false);
-			    //fillRandomLetters);
-	System.out.println("Find these words:\n"+w.wordsInPuzzle());
+	w.loadWordsFromFile("WordGridWords.txt",fillRandomLetters);
+	System.out.println("\nFind these words:\n"+w.wordsInPuzzle());
 	System.out.println(w);
     }
 }
