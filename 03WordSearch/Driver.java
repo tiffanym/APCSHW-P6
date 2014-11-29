@@ -16,7 +16,12 @@ public class Driver{
 	    }
 	}
 	if(args.length==3){
-	    w.setSeed(args[2]);
+	    try{
+		w.setSeed(Integer.parseInt(args[2]));
+	    }catch(NumberFormatException e){
+		System.err.println("Argument"+args[0]+" must be an integer.");
+		System.exit(1);
+	    }
 	}
 	if(args.length==4){
 	    fillRandomLetters =!args[3].equals("1");
