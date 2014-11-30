@@ -360,10 +360,6 @@ public class WordGrid{
 		int col=r.nextInt(data[0].length);
 		int dx=r.nextInt(3)-1;
 		int dy=r.nextInt(3)-1;
-		//int row=(int)(Math.random()*data.length);
-		//int col=(int)(Math.random()*data[0].length);
-		//int dx=(int)(Math.random()*3)-1;
-		//int dy=(int)(Math.random()*3)-1;
 		if (addWord(temp.get(i),row,col,dx,dy)){
 		    dict.add(temp.get(i));
 		}
