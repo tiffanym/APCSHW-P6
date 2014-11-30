@@ -277,7 +277,6 @@ public class WordGrid{
     /**Fills any empty spots in array with random letters
      */
     public void fillUp(){
-	Random r=new Random();
 	if (data.length>0){
 	    for (int row=0;row<data.length;row++){
 		for (int col=0;col<data[row].length;col++){
