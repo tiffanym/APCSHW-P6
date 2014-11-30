@@ -298,20 +298,28 @@ public class WordGrid{
 	r.setSeed(seed);
     }
 
-    /**Adds 10 words randomly from a given list of words
+    /**Adds words randomly from a given list of words
+     *Number of words added is based on size of array
      *
      *@param allWords the dictionary/word list the words are from
      */
     public void addManyWordsToList (ArrayList<String> allWords){
-	int maxWords=28;
+	int maxWords=(int)(data.length * data[0].length/4);
+	ArrayList<String> temp= new ArrayList<String>();
 	for (int i=0;i<maxWords;i++){
-	    int index=(int)(Math.random()*dict.size());
-	    int row=(int)(Math.random()*data.length);
-	    int col=(int)(Math.random()*data[0].length);
-	    int dx=(int)(Math.random()*3)-1;
-	    int dy=(int)(Math.random()*3)-1;
-	    addWord(allWords.get(index),row,col,dx,dy);	    
-	    wordList.add(allWords.get(index));	    
+	    int index=r.nextInt(dict.size());
+	    int row=r.nextInt(data.length);
+	    int col=r.nextInt(data[0].length);
+	    int dx=r.nextInt(3)-1;
+	    int dy=r.nextInt(3)-1;
+	    if (!addWord(allWords.get(index),row,col,dx,dy) && !temp.contains(allWords.get(index))){
+		temp.add(allWords.get(index));
+		addWord(allWords.get(index),row,col,dx,dy);
+		wordList.add(allWords.get(index));
+	    }
+	    else if (index+10<allWords.size()){
+		index+=5;
+	    }
 	}
     }
 
@@ -348,10 +356,14 @@ public class WordGrid{
 	    }
 	    
 	    for (int i=0;i<temp.size();i++){		
-		int row=(int)(Math.random()*data.length);
-		int col=(int)(Math.random()*data[0].length);
-		int dx=(int)(Math.random()*3)-1;
-		int dy=(int)(Math.random()*3)-1;
+		int row=r.nextInt(data.length);
+		int col=r.nextInt(data[0].length);
+		int dx=r.nextInt(3)-1;
+		int dy=r.nextInt(3)-1;
+		//int row=(int)(Math.random()*data.length);
+		//int col=(int)(Math.random()*data[0].length);
+		//int dx=(int)(Math.random()*3)-1;
+		//int dy=(int)(Math.random()*3)-1;
 		if (addWord(temp.get(i),row,col,dx,dy)){
 		    dict.add(temp.get(i));
 		}
