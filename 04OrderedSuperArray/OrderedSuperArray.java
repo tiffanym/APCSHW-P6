@@ -13,8 +13,9 @@ public class OrderedSuperArray extends SuperArray{
     public String toString(){
 	String s="[";
 	for (int i=0;i<data.length;i++){
-	    s+=" "+(data[i]);
+	    s+=" "+(data[i])+",";
 	}
+	s=s.substring(0,s.length()-1);
 	return s+"]";
     }
 
@@ -22,16 +23,26 @@ public class OrderedSuperArray extends SuperArray{
     public void add(String s){
 	resize(data.length+1);
 	data[data.length-1]=s;
-	for (int i=data.length-2;i>0;i--){
+	for (int i=data.length-2;i>-1;i--){
 	    if (s.compareTo(data[i])>=0){
-		data[i+1]=data[i];
-		data[i]=s;
+		//data[i+1]=data[i];
+		//data[i]=s;
+		data[i+1]=s;
 		break;
 	    }
 	    else{
 		data[i+1]=data[i];
+		data[i]=s;
 	    }
-	}	
+	}		
+    }
+
+    public void add(int index, String element){
+	if (index<0 || index>data.length){
+	    throw new IndexOutOfBoundsException();
+	}
+	element=data[index].charAt(0)+element.substring(1);
+	add(element);
     }
 
     //--------------------//
@@ -59,6 +70,7 @@ public class OrderedSuperArray extends SuperArray{
     //extra methods
     public void clear(){
 	numElements=0;
+	data=new String[numElements];
     }
 
     public Object get(int index){
@@ -98,6 +110,7 @@ public class OrderedSuperArray extends SuperArray{
     
     public static void main(String[]args){
 	OrderedSuperArray data=new OrderedSuperArray(10);
+	data.clear();
 	data.add("if");
 	System.out.println(data.toString());
 	data.add("you");
@@ -119,6 +132,8 @@ public class OrderedSuperArray extends SuperArray{
 	data.add("party");
 	System.out.println(data.toString());
 	data.add("supperarray");
+	System.out.println(data.toString());
+	data.add(5,"dancing");
 	System.out.println(data.toString());
     }
 }
