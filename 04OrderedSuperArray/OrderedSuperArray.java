@@ -37,14 +37,6 @@ public class OrderedSuperArray extends SuperArray{
 	}		
     }
 
-    public void add(int index, String element){
-	if (index<0 || index>data.length){
-	    throw new IndexOutOfBoundsException();
-	}
-	element=data[index].charAt(0)+element.substring(1);
-	add(element);
-    }
-
     //--------------------//
     
     public int size(){
@@ -81,16 +73,13 @@ public class OrderedSuperArray extends SuperArray{
 	return data[index];
     }
     
-    public String set (int index, String e){
-	if (outofrange(index)){
-	    //return "ERROR: index not within range of array";
-	    throw new ArithmeticException();
+    public String set (int index, String element){
+	if (index<0 || index>data.length){
+	    throw new IndexOutOfBoundsException();
 	}
-	else{
-	    String objreplaced=data[index];
-	    data[index]=e;
-	    return objreplaced;
-	}
+	element=data[index].charAt(0)+element.substring(1);
+	add(element);	
+	return data[index+1];
     }
     
     public String remove(int index){
@@ -133,7 +122,7 @@ public class OrderedSuperArray extends SuperArray{
 	System.out.println(data.toString());
 	data.add("supperarray");
 	System.out.println(data.toString());
-	data.add(5,"dancing");
+	System.out.println(data.set(5,"dancing"));
 	System.out.println(data.toString());
     }
 }
