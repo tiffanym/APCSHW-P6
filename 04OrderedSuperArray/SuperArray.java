@@ -108,7 +108,8 @@ public class SuperArray{
 	    for (int i=1;i<size();i++){
 		String element=data[i];
 		if (element.compareTo(data[i-1])<0){
-		    int x=i;
+		    int x=i-2;
+		    //somethine wrong with this x
 		    while(data[x].compareTo(element)>0 && x>-1){
 			data[x+1]=data[x];
 			x--;
