@@ -1,5 +1,6 @@
+import java.util.*;
 public class SuperArray{
-    Object[] data;
+    String[] data;
     int numElements;
 
     public SuperArray(){
@@ -8,7 +9,7 @@ public class SuperArray{
 
     public SuperArray(int numElements){
 	this.numElements=numElements;
-	data=new Object[numElements];
+	data=new String[numElements];
     }
 
     public String toString(){
@@ -25,12 +26,12 @@ public class SuperArray{
     }
 
     //add commands----------//-
-    public void add(Object o){
+    public void add(String o){
 	resize(data.length+1);
 	data[size()-1]=o;
     }
 
-    public void add(int index,Object o){
+    public void add(int index,String o){
 	if (index>=size()){
 	    resize(data.length+1);
 	    data[data.length-1]=o;
@@ -50,7 +51,7 @@ public class SuperArray{
     }
     
     public void resize(int newSize){
-	Object[] newdata=new Object[newSize];
+	String[] newdata=new String[newSize];
 	int smaller=size();
 	if (newSize<=size()){
 	    smaller=newSize;
@@ -63,12 +64,11 @@ public class SuperArray{
 
     //extra methods
     public void clear(){
-	for (int i=0;i<data.length;i++){
-	    data[i]=null;
-	}
+	numElements=0;
+	data=new String[numElements];
     }
 
-    public Object get(int index){
+    public String get(int index){
 	if (outofrange(index)){
 	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
@@ -76,25 +76,25 @@ public class SuperArray{
 	return data[index];
     }
     
-    public Object set (int index, Object e){
+    public String set (int index, String e){
 	if (outofrange(index)){
 	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
 	}
 	else{
-	    Object objreplaced=data[index];
+	    String objreplaced=data[index];
 	    data[index]=e;
 	    return objreplaced;
 	}
     }
     
-    public Object remove(int index){
+    public String remove(int index){
 	if (outofrange(index)){
 	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
 	}
 	else{
-	    Object objreplaced=data[index];
+	    String objreplaced=data[index];
 	    for (int i=index;i<size()-1;i++){
 		data[i]=data[i+1];
 	    }
@@ -102,8 +102,32 @@ public class SuperArray{
 	    return objreplaced;
 	}
     }
+
+    public void insertionSort(){
+	if (size()>1){
+	    for (int i=1;i<size();i++){
+		String element=data[i];
+		if (element.compareTo(data[i-1])<0){
+		    int x=i;
+		    while(data[x].compareTo(element)>0 && x>-1){
+			data[x+1]=data[x];
+			x--;
+		    }
+		    data[x]=element;
+		}
+	    }
+	}
+    }
     
     public static void main(String[]args){
+	SuperArray data=new SuperArray();
+	data.clear();
+	data.add("happy");
+	data.add("sad");
+	data.add("lalala");
+	data.insertionSort();
+	System.out.println(data.toString());
+	/*
 	//APCS class test	
 	//Integer x = new Integer(5);
 	//SuperArray L = new SuperArray();
@@ -141,5 +165,6 @@ public class SuperArray{
 	}
 	//System.out.println(data.remove(5));
 	System.out.println(data.toString());
+	*/
     }
 }
