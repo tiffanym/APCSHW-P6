@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 public class WordGrid{
     protected char[][]data;
     protected Random r= new Random();
-    protected Random rng=new Random();
     protected ArrayList<String> dict=new ArrayList<String>(); //all words
     protected ArrayList<String> wordList=new ArrayList<String>(); //words used in WordGrid
 
@@ -282,7 +281,7 @@ public class WordGrid{
 	    for (int row=0;row<data.length;row++){
 		for (int col=0;col<data[row].length;col++){
 		    if (data[row][col]=='_'){
-			char c=(char)(rng.nextInt(26)+'a');
+			char c=(char)(r.nextInt(26)+'a');
 			data[row][col]=Character.toUpperCase(c);
 		    }
 		}
@@ -296,7 +295,6 @@ public class WordGrid{
      */
     public void setSeed(long seed){
 	r.setSeed(seed);
-	rng.setSeed(seed);
     }
 
     /**Adds words randomly from a given list of words

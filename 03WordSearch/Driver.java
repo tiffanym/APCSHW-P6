@@ -4,7 +4,6 @@ import java.io.*;
 public class Driver{  
     public static void main(String[]args){
 	WordGrid w=new WordGrid();
-	Random rng=new Random();
 	boolean fillRandomLetters=true;
 	if (args.length>0){
 	    try{
