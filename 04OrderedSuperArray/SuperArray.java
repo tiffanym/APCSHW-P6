@@ -8,7 +8,7 @@ public class SuperArray{
 
     public SuperArray(int numElements){
 	this.numElements=numElements;
-	data=new SuperArray[numElements];
+	data=new Object[numElements];
     }
 
     public String toString(){

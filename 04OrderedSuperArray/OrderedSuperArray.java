@@ -2,11 +2,12 @@ public class OrderedSuperArray extends SuperArray{
     String[] data;
 
     public OrderedSuperArray(){
-	super();
+	this(10);
     }
 
     public OrderedSuperArray(int numElements){
-	super(numElements);
+	this.numElements=numElements;
+	data=new String[numElements];
     }
 
     public String toString(){
@@ -19,10 +20,8 @@ public class OrderedSuperArray extends SuperArray{
 
     //add commands----------//
     public void add(String s){
-	if (data[data.length-1] ==null){
-	    resize(data.length+1);
-	    data[data.length-1]=s;
-	}
+	resize(data.length+1);
+	data[data.length-1]=s;
 	for (int i=data.length-2;i>0;i--){
 	    if (s.compareTo(data[i])>=0){
 		data[i+1]=data[i];
@@ -32,11 +31,7 @@ public class OrderedSuperArray extends SuperArray{
 	    else{
 		data[i+1]=data[i];
 	    }
-	}
-    }
-
-    public void add (int index, String o){
-	
+	}	
     }
 
     //--------------------//
@@ -53,7 +48,7 @@ public class OrderedSuperArray extends SuperArray{
 	}
 	for (int i=0;i<max;i++){
 	    if (data[i]==null){
-		data[i]="";
+		data[i]="";	
 	    }
 	    newdata[i]=data[i];
 	}
@@ -63,9 +58,6 @@ public class OrderedSuperArray extends SuperArray{
 
     //extra methods
     public void clear(){
-	//for (int i=0;i<data.length;i++){
-	//data[i]=null;
-	//}
 	numElements=0;
     }
 
@@ -105,33 +97,28 @@ public class OrderedSuperArray extends SuperArray{
     }
     
     public static void main(String[]args){
-	OrderedSuperArray data=new OrderedSuperArray();
-	OrderedSuperArray sup=new OrderedSuperArray(6);
-	//data.resize(8);
+	OrderedSuperArray data=new OrderedSuperArray(10);
+	data.add("if");
+	System.out.println(data.toString());
+	data.add("you");
+	System.out.println(data.toString());
 	data.add("happy");
 	System.out.println(data.toString());
-       
-	//data.clear();
-	//System.out.println(data.get(3));
-	//System.out.println(data.get(15));
-	//data.add(5,"woot");
-	//System.out.println(data.toString());
-	//data.set(5,"wayusdfsdfdso");
-	
-	try{
-	    System.out.println(data.set(17,"wayusdfsdfdso"));
-	}
-	catch(ArithmeticException e){
-	    System.out.println("Please tell me you can count.");
-	}
-	
-	try{
-	    System.out.println(data.remove(17));
-	}
-	catch(ArithmeticException e){
-	    System.out.println("Math isn't for you!");
-	}
-	//System.out.println(data.remove(5));
-	//System.out.println(data.toString());
+	data.add("and");
+	System.out.println(data.toString());
+	data.add("know");
+	System.out.println(data.toString());
+	data.add("it");
+	System.out.println(data.toString());
+	data.add("clap");
+	System.out.println(data.toString());
+	data.add("feet");
+	System.out.println(data.toString());
+	data.add("dance");
+	System.out.println(data.toString());
+	data.add("party");
+	System.out.println(data.toString());
+	data.add("supperarray");
+	System.out.println(data.toString());
     }
 }
