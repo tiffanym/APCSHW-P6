@@ -1,5 +1,5 @@
 public class OrderedSuperArray extends SuperArray{
-    protected String[] data;
+    String[] data;
 
     public OrderedSuperArray(){
 	super();
@@ -19,12 +19,12 @@ public class OrderedSuperArray extends SuperArray{
 
     //add commands----------//
     public void add(String s){
-	resize(data.length+1);
-	//data[size()-1]=o;
+	if (data[data.length-1] ==null){
+	    resize(data.length+1);
+	    data[data.length-1]=s;
+	}
 	for (int i=data.length-2;i>0;i--){
 	    if (s.compareTo(data[i])>=0){
-		//ssec=s.substring(1,2);
-		//dssec=data[i].substring(1,2);
 		data[i+1]=data[i];
 		data[i]=s;
 		break;
@@ -32,7 +32,11 @@ public class OrderedSuperArray extends SuperArray{
 	    else{
 		data[i+1]=data[i];
 	    }
-	}	
+	}
+    }
+
+    public void add (int index, String o){
+	
     }
 
     //--------------------//
@@ -43,21 +47,26 @@ public class OrderedSuperArray extends SuperArray{
     
     public void resize(int newSize){
 	String[] newdata=new String[newSize];
-	int smaller=size();
-	if (newSize<=size()){
-	    smaller=newSize;
+	int max=numElements;
+	if (newSize<=numElements){
+	    max=newSize;
 	}
-	for (int i=0;i<smaller;i++){
+	for (int i=0;i<max;i++){
+	    if (data[i]==null){
+		data[i]="";
+	    }
 	    newdata[i]=data[i];
 	}
+	numElements=newSize;
 	data=newdata;
     }
 
     //extra methods
     public void clear(){
-	for (int i=0;i<data.length;i++){
-	    data[i]=null;
-	}
+	//for (int i=0;i<data.length;i++){
+	//data[i]=null;
+	//}
+	numElements=0;
     }
 
     public Object get(int index){
@@ -96,8 +105,8 @@ public class OrderedSuperArray extends SuperArray{
     }
     
     public static void main(String[]args){
-	SuperArray data=new OrderedSuperArray();
-	SuperArray sup=new OrderedSuperArray(6);
+	OrderedSuperArray data=new OrderedSuperArray();
+	OrderedSuperArray sup=new OrderedSuperArray(6);
 	//data.resize(8);
 	data.add("happy");
 	System.out.println(data.toString());
@@ -105,8 +114,8 @@ public class OrderedSuperArray extends SuperArray{
 	//data.clear();
 	//System.out.println(data.get(3));
 	//System.out.println(data.get(15));
-	data.add(5,"woot");
-	System.out.println(data.toString());
+	//data.add(5,"woot");
+	//System.out.println(data.toString());
 	//data.set(5,"wayusdfsdfdso");
 	
 	try{
@@ -123,6 +132,6 @@ public class OrderedSuperArray extends SuperArray{
 	    System.out.println("Math isn't for you!");
 	}
 	//System.out.println(data.remove(5));
-	System.out.println(data.toString());
+	//System.out.println(data.toString());
     }
 }

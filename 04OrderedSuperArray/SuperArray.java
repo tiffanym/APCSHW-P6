@@ -1,10 +1,9 @@
 public class SuperArray{
-    private Object[] data;
-    private int numElements;
+    Object[] data;
+    int numElements;
 
     public SuperArray(){
-	numElements=10;
-	data=new SuperArray[numElements];
+	this(10);
     }
 
     public SuperArray(int numElements){
