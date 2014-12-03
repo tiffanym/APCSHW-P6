@@ -25,8 +25,6 @@ public class OrderedSuperArray extends SuperArray{
 	data[data.length-1]=s;
 	for (int i=data.length-2;i>-1;i--){
 	    if (s.compareTo(data[i])>=0){
-		//data[i+1]=data[i];
-		//data[i]=s;
 		data[i+1]=s;
 		break;
 	    }
@@ -37,6 +35,12 @@ public class OrderedSuperArray extends SuperArray{
 	}		
     }
 
+    public void add(int index, String s){
+	if (index<0 || index>data.length){
+	    throw new IndexOutOfBoundsException();
+	}
+	add(s);
+    }
     //--------------------//
     
     public int size(){
@@ -65,9 +69,8 @@ public class OrderedSuperArray extends SuperArray{
 	data=new String[numElements];
     }
 
-    public Object get(int index){
+    public String get(int index){
 	if (outofrange(index)){
-	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
 	}
 	return data[index];
@@ -78,22 +81,22 @@ public class OrderedSuperArray extends SuperArray{
 	    throw new IndexOutOfBoundsException();
 	}
 	element=data[index].charAt(0)+element.substring(1);
+	String sreplaced=remove(index);
 	add(element);	
-	return data[index+1];
+	return sreplaced;
     }
     
     public String remove(int index){
 	if (outofrange(index)){
-	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
 	}
 	else{
-	    String objreplaced=data[index];
+	    String sreplaced=data[index];
 	    for (int i=index;i<size()-1;i++){
 		data[i]=data[i+1];
 	    }
 	    resize(data.length-1);
-	    return objreplaced;
+	    return sreplaced;
 	}
     }
     
