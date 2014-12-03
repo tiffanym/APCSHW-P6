@@ -102,7 +102,7 @@ public class OrderedSuperArray extends SuperArray{
     }
     
     public static void main(String[]args){
-	OrderedSuperArray data=new OrderedSuperArray(10);
+	OrderedSuperArray data=new OrderedSuperArray(10);	
 	data.clear();
 	data.add("if");
 	System.out.println(data.toString());
@@ -127,14 +127,6 @@ public class OrderedSuperArray extends SuperArray{
 	data.add("supperarray");
 	System.out.println(data.toString());
 	System.out.println(data.set(5,"dancing"));
-	
-	//to compare built in sort() method time with my code's time
-	//RESULT: longer to compile, but quicker to run
-	//Still prefer my method; can't really tell the diff anyway :P
-	/*
-	String[] data={"if","you","happy","and","know","it","clap","feet","dance","party","supperarray"};
-	Arrays.sort(data);
-	*/
 	System.out.println(data.toString());
     }
 }

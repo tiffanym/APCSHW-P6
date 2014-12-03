@@ -132,6 +132,7 @@ public class SuperArray{
 	}
     }
     
+    
     public static void main(String[]args){
 	SuperArray data=new SuperArray();
 	data.clear();
@@ -144,6 +145,12 @@ public class SuperArray{
 	System.out.println(data.toString());
 	data.insertionSort();
 	System.out.println(data.toString());
+	//to compare built in sort() method time with my code's time
+	//RESULT: longer to compile, but quicker to run
+	//Still prefer my method; can't really tell the diff anyway :P
+	  String[] data={"if","you","happy","and","know","it","clap","feet","dance","party","supperarray"};
+	  Arrays.sort(data);
+
 	/*
 	//APCS class test	
 	//Integer x = new Integer(5);
