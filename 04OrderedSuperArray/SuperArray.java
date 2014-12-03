@@ -90,7 +90,6 @@ public class SuperArray{
     
     public String remove(int index){
 	if (outofrange(index)){
-	    //return "ERROR: index not within range of array";
 	    throw new ArithmeticException();
 	}
 	else{
@@ -104,17 +103,30 @@ public class SuperArray{
     }
 
     public void insertionSort(){
-	if (size()>1){
-	    for (int i=1;i<size();i++){
+	if (data.length>1){
+	    for (int i=1;i<data.length;i++){
 		String element=data[i];
 		if (element.compareTo(data[i-1])<0){
-		    int x=i-2;
-		    //somethine wrong with this x
-		    while(data[x].compareTo(element)>0 && x>-1){
-			data[x+1]=data[x];
-			x--;
+		    int x;
+		    if (i>1){
+			x=i-2;
+			while(data[x].compareTo(element)>0 && x>0){
+			    data[x+1]=data[x];
+			    x--;
+			}
+			if (x>0){
+			    x+=1;
+			}
+			for (int a=i;a>x;a--){
+			    data[a]=data[a-1];
+			}
+			data[x]=element;
+
 		    }
-		    data[x]=element;
+		    else{
+			data[i]=data[i-1];
+			data[i-1]=element;			
+		    }		    
 		}
 	    }
 	}
@@ -123,9 +135,13 @@ public class SuperArray{
     public static void main(String[]args){
 	SuperArray data=new SuperArray();
 	data.clear();
+	data.add("ice");
 	data.add("happy");
+	data.add("baby");
 	data.add("sad");
 	data.add("lalala");
+	data.add("shimmy");
+	System.out.println(data.toString());
 	data.insertionSort();
 	System.out.println(data.toString());
 	/*
