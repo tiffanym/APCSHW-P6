@@ -132,7 +132,17 @@ public class SuperArray{
 	}
     }
     
-    
+    //for testing purposes only
+    public void badInsertionSort(){	
+        OrderedSuperArray c = new OrderedSuperArray();
+        while( this.size() > 0){ 
+            c.add(this.remove(0));
+        }
+        while(c.size() > 0){
+            this.add(c.remove(0));
+        }
+    }
+
     public static void main(String[]args){
 	SuperArray data=new SuperArray();
 	data.clear();
@@ -143,13 +153,39 @@ public class SuperArray{
 	data.add("lalala");
 	data.add("shimmy");
 	System.out.println(data.toString());
-	data.insertionSort();
+	//data.insertionSort();
+	/*compile:
+	  real 0m0.646 s
+	  user 0m0.944 s
+	  sys 0m0.040 s
+	  
+	  run:
+	  real 0m0.066 s
+	  user 0m0.036 s
+	  sys 0m0.024 s
+	 */
+
+	//the badInsertion is a few seconds or so slower than my own code
+	data.badInsertionSort();
+	/*compile:
+	  real 0m0.665 s
+	  user 0m0.920 s
+	  sys 0m0.056 s
+	  
+	  run:
+	  real 0m0.068 s
+	  user 0m0.048 s
+	  sys 0m0.012 s
+	 */
+
 	System.out.println(data.toString());
+
 	//to compare built in sort() method time with my code's time
 	//RESULT: longer to compile, but quicker to run
 	//Still prefer my method; can't really tell the diff anyway :P
-	  String[] data={"if","you","happy","and","know","it","clap","feet","dance","party","supperarray"};
-	  Arrays.sort(data);
+	//String[] data={"if","you","happy","and","know","it","clap","feet","dance","party","supperarray"};
+	  //Arrays.sort(data);
+	  
 
 	/*
 	//APCS class test	
