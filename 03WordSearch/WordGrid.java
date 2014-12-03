@@ -370,11 +370,11 @@ public class WordGrid{
 	    e.printStackTrace();
 	}
 	
+	addManyWordsToList(dict);
+
 	if (fillRandomLetters){
 	    fillUp();
 	}
-
-	addManyWordsToList(dict);
     }
 
 }
