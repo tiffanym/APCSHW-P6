@@ -101,6 +101,25 @@ public class OrderedSuperArray extends SuperArray{
 	}
     }
     
+    //binary search
+    public int find (String target){
+	int index=0;
+	for (int pos=1;pos<data.length;pos=pos*2){
+	    if (data[pos-1].equals(target)){
+		if (pos>1 && data[pos-2].equals(target)){
+		    for (int x=pos-2;x>0;x--){
+			if (!data[x-1].equals(target)){
+			    index=x;
+			}
+		    }
+		}
+		index=pos;
+		break;
+	    }
+	}
+	return index;
+    }
+
     public static void main(String[]args){
 	OrderedSuperArray data=new OrderedSuperArray(10);	
 	data.clear();
@@ -128,5 +147,6 @@ public class OrderedSuperArray extends SuperArray{
 	System.out.println(data.toString());
 	System.out.println(data.set(5,"dancing"));
 	System.out.println(data.toString());
+	System.out.println(data.find("feet"));
     }
 }

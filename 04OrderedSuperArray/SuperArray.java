@@ -131,6 +131,19 @@ public class SuperArray{
 	    }
 	}
     }
+
+    public int find(String target){
+	int index=0;
+	if(data.length>0){
+	    for (int i=0;i<data.length;i++){
+		if (target.equals(data[i])){
+		    index=i;
+		    break;
+		}
+	    }
+	}
+	return index;
+    }
     
     //for testing purposes only
     public void badInsertionSort(){	
@@ -153,7 +166,7 @@ public class SuperArray{
 	data.add("lalala");
 	data.add("shimmy");
 	System.out.println(data.toString());
-	//data.insertionSort();
+	data.insertionSort();
 	/*compile:
 	  real 0m0.646 s
 	  user 0m0.944 s
@@ -166,7 +179,7 @@ public class SuperArray{
 	 */
 
 	//the badInsertion is a few seconds or so slower than my own code
-	data.badInsertionSort();
+	//data.badInsertionSort();
 	/*compile:
 	  real 0m0.665 s
 	  user 0m0.920 s
@@ -179,6 +192,7 @@ public class SuperArray{
 	 */
 
 	System.out.println(data.toString());
+	System.out.println(data.find("lalala"));
 
 	//to compare built in sort() method time with my code's time
 	//RESULT: longer to compile, but quicker to run
