@@ -1,0 +1,3 @@
+NOTE: All tests/ notes/documentation are in OrderedSuperArray and SuperArray (mostly in main file, 
+though there are very few notes in other methods except maybe to point out that
+badInsertionSort() was to be used for testing purposes only).
