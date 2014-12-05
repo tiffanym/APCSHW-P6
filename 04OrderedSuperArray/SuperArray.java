@@ -156,9 +156,33 @@ public class SuperArray{
         }
     }
 
+    //from 12/5/2014 class
+    //from index start, inclusive, to end, exclusive
+    public int findMinIndex(int start, int end){
+	int minIndex=start;
+	for (int i=start;i<end+1;i++){
+	    if (data[i].compareTo(data[minIndex])<0){
+		minIndex=i;
+	    }
+	}
+	return minIndex;
+    }
+
+    public void selectionSort(){
+	for (int i=0;i<data.length;i++){
+	    int min=findMinIndex(i,data.length-1);
+	    String sAtMin=data[min];
+	    for (int x=i;x<min;x++){
+		data[x+1]=data[x];
+	    }
+	    data[i]=sAtMin;
+	}
+    }
+
     public static void main(String[]args){
 	SuperArray data=new SuperArray();
 	data.clear();
+	/*
 	data.add("ice");
 	data.add("happy");
 	data.add("baby");
@@ -167,6 +191,7 @@ public class SuperArray{
 	data.add("shimmy");
 	System.out.println(data.toString());
 	data.insertionSort();
+	*/
 	/*compile:
 	  real 0m0.646 s
 	  user 0m0.944 s
@@ -191,15 +216,38 @@ public class SuperArray{
 	  sys 0m0.012 s
 	 */
 
+	//TESTING SELECTION SORT
+	for (int i=0;i<5;i++){
+	    data.add((int)Math.random()*6,""+i);
+	}
+
 	System.out.println(data.toString());
-	System.out.println(data.find("lalala"));
+	data.selectionSort();
+	//data.insertionSort();
+	System.out.println(data.toString());
+	//System.out.println(data.find("lalala"));
+
+
+
+
+
+
 
 	//to compare built in sort() method time with my code's time
 	//RESULT: longer to compile, but quicker to run
 	//Still prefer my method; can't really tell the diff anyway :P
 	//String[] data={"if","you","happy","and","know","it","clap","feet","dance","party","supperarray"};
 	  //Arrays.sort(data);
-	  
+	
+
+
+
+
+
+
+
+
+  
 
 	/*
 	//APCS class test	
