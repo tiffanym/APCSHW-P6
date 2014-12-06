@@ -109,11 +109,11 @@ public class OrderedSuperArray extends SuperArray{
 		if (pos>1 && data[pos-2].equals(target)){
 		    for (int x=pos-2;x>0;x--){
 			if (!data[x-1].equals(target)){
-			    index=x;
+			    index=x-1;
 			}
 		    }
 		}
-		index=pos;
+		index=pos-1;
 		break;
 	    }
 	}
@@ -148,5 +148,6 @@ public class OrderedSuperArray extends SuperArray{
 	System.out.println(data.set(5,"dancing"));
 	System.out.println(data.toString());
 	System.out.println(data.find("feet"));
+	System.out.println(data.find("bird"));
     }
 }
