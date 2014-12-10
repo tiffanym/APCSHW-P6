@@ -172,8 +172,8 @@ public class SuperArray{
 	for (int i=0;i<data.length;i++){
 	    int min=findMinIndex(i,data.length-1);
 	    String sAtMin=data[min];
-	    for (int x=i;x<min;x++){
-		data[x+1]=data[x];
+	    for (int x=min;x>i;x--){
+		data[x]=data[x-1];
 	    }
 	    data[i]=sAtMin;
 	}
@@ -182,7 +182,7 @@ public class SuperArray{
     public static void main(String[]args){
 	SuperArray data=new SuperArray();
 	data.clear();
-	/*
+	//call this test1
 	data.add("ice");
 	data.add("happy");
 	data.add("baby");
@@ -190,8 +190,8 @@ public class SuperArray{
 	data.add("lalala");
 	data.add("shimmy");
 	System.out.println(data.toString());
-	data.insertionSort();
-	*/
+	//data.insertionSort();
+	
 	/*compile:
 	  real 0m0.646 s
 	  user 0m0.944 s
@@ -216,14 +216,55 @@ public class SuperArray{
 	  sys 0m0.012 s
 	 */
 
-	//TESTING SELECTION SORT
-	for (int i=0;i<5;i++){
-	    data.add((int)Math.random()*6,""+i);
-	}
+	//TESTING SELECTION SORT-- call it test2
+	//for (int i=0;i<5;i++){
+	//    data.add((int)Math.random()*6,""+i);
+	//}
 
-	System.out.println(data.toString());
-	data.selectionSort();
+	//System.out.println(data.toString());
+	//data.selectionSort();
+	/*test2
+
+	  compile:
+	  real 0m0.874 s
+	  user 0m1.602 s
+	  sys 0m0.040 s
+	  
+	  run:
+	  real 0m0.085 s
+	  user 0m0.075 s
+	  sys 0m0.012 s
+	 */
+
 	//data.insertionSort();
+	/*test2
+
+	  compile:
+	  real 0m0.962 s
+	  user 0m1.684 s
+	  sys 0m0.044 s
+	  
+	  run:
+	  real 0m0.095 s
+	  user 0m0.084 s
+	  sys 0m0.012 s
+	 */
+
+	//longer to compile, but quicker to run... interesting...
+	Arrays.sort(data);
+	/*test2
+
+	  compile:
+	  real 0m0.932 s
+	  user 0m1.621 s
+	  sys 0m0.048 s
+	  
+	  run:
+	  real 0m0.069 s
+	  user 0m0.062 s
+	  sys 0m0.008 s
+	 */
+
 	System.out.println(data.toString());
 	//System.out.println(data.find("lalala"));
 
