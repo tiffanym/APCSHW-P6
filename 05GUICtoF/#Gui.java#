@@ -8,19 +8,20 @@ public class Gui extends JFrame implements ActionListener{
     private JTextField text;
     private Container buttons;
     private Container textyStuff;
+    private Container addedSpace;
     private JRadioButton cf;
     private JRadioButton fc;
     private JButton convert;
     private JCheckBox box;
 
     public Gui() {
-	this.setTitle("The LEGIT Temperature Converter");
+	this.setTitle("Temperature Converter");
 	this.setSize(600,200);
 	this.setLocation(100,100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	pane = this.getContentPane();
-	pane.setLayout(new GridLayout(2,1));
+	pane.setLayout(new GridLayout(3,1));
 	
 	l = new JLabel("Enter temperature:",null,JLabel.CENTER);
 	text = new JTextField(12);
@@ -46,10 +47,13 @@ public class Gui extends JFrame implements ActionListener{
 	buttons.add(cf);
 	buttons.add(fc);
 	buttons.add(convert);
-	buttons.add(box);
+	
+	addedSpace = new Container();
+	addedSpace.add(box);
 
 	pane.add(textyStuff);
 	pane.add(buttons);
+	pane.add(addedSpace);
     }
     
     public void actionPerformed(ActionEvent e){
@@ -58,29 +62,10 @@ public class Gui extends JFrame implements ActionListener{
 	    String s=text.getText(); 
 	    int currTemp = Integer.parseInt(s);
 	    if (cf.isSelected()){
-		int newTemp = (int)((9*currTemp)/5)+32;
+		int newTemp = (int)((9/5)*currTemp)+32;
+		s=""+newTemp;
 		if (box.isSelected()){
-		    s=""+(newTemp + (int)(Math.random()*10));
-		}
-		else{
-		    s=""+newTemp;
+		    s+=""+(int)(Math.random()*10);
 		}
 	    }	    
-	    else if (fc.isSelected()){
-		int newTemp = (int)(5*(currTemp-32)/9);
-		if (box.isSelected()){
-		    s=""+(newTemp + (int)(Math.random()*10));
-		}
-		else{
-		    s=""+newTemp;
-		}
-	    }
-	    text.setText(s);
-	}
-    }
-
-    public static void main(String[] args) {
-        Gui g = new Gui();
-        g.setVisible(true);
-    }
-}
+	    else if (fc.isSelected()
