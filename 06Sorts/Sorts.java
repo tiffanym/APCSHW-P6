@@ -2,6 +2,14 @@ import java.util.*;
 
 public class Sorts{
 
+    public static String name(){
+	return "Ming, Tiffany";
+    }
+
+    public static int period(){
+	return 6;
+    }
+
     public static void insertionSort(int[] data){
 	if (data.length>1){
 	    for (int i=1;i<data.length;i++){
@@ -73,12 +81,33 @@ public class Sorts{
 	}
     }
 
+    public static void radix(int[] data){
+	//ArrayList() creates array list with initial capacity of 10
+	//ArrayList<Integer> tempOld=new ArrayList<Integer>(10);
+	int[][] tempOld=new int[10][];
+	int place=1;
+	for (int i : data){  //means "for each element i in data"
+	    int digit= i%(int)Math.pow(10,place);
+	    //arraylist add function: add (index, element)
+	    //tempOld.add(digit,data[i]);
+	    
+	    //hm... how to add to temporary array thing
+	    tempOld[digit][tempOld[digit].length]=data[i];
+	    //not sure why above doesn't work....
+	    place+=1;
+	}
+    }
+
     public static void main(String[]args){
-	int[] data = new int[]{5,10,4,12,-5,1,0};
+	System.out.println(name());
+	System.out.println(period());
+	System.out.println();
+	int[] data = new int[]{5,10,4,12,1,0};
 	System.out.println(Arrays.toString(data));
-	bubbleSort(data);
+	//bubbleSort(data);
 	//selectionSort(data);
 	//insertionSort(data);
+	radix(data);
 	System.out.println(Arrays.toString(data));
     }
 
