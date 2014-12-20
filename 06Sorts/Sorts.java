@@ -82,18 +82,26 @@ public class Sorts{
     }
 
     public static void radix(int[] data){
-	//ArrayList() creates array list with initial capacity of 10
-	//ArrayList<Integer> tempOld=new ArrayList<Integer>(10);
-	int[][] tempOld=new int[10][];
+	boolean done=false;
 	int place=1;
-	for (int i : data){  //means "for each element i in data"
-	    int digit= i%(int)Math.pow(10,place);
-	    //arraylist add function: add (index, element)
-	    //tempOld.add(digit,data[i]);
-	    
-	    //hm... how to add to temporary array thing
-	    tempOld[digit][tempOld[digit].length]=data[i];
-	    //not sure why above doesn't work....
+	while (!done){
+	    int[][] tempOld=new int[10][data.length];
+	    int[] count=new int[10];
+	    for (int i=0;i< data.length;i++){
+		int digit= (data[i]%(int)Math.pow(10,place))-(data[i]%(int)(Math.pow(10,place-1)));
+		tempOld[digit][count[digit]]=data[i];
+		count[digit]+=1;
+	    }
+	    if (count[0]==data.length){
+		done=true;
+	    }
+	    int index=0;
+	    for (int x=0;x<count.length;x++){
+		for (int start=0;start<count[x];start++){
+		    data[index]=tempOld[x][start];
+		    index+=1;
+		}
+	    }
 	    place+=1;
 	}
     }
