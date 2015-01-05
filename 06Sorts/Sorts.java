@@ -1,4 +1,3 @@
-//package sorting;
 import java.util.*;
 import java.io.*;
 
