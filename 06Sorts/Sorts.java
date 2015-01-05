@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Sorts{
 
@@ -82,28 +83,65 @@ public class Sorts{
     }
 
     public static void radix(int[] data){
-	boolean done=false;
-	int place=1;
-	while (!done){
-	    int[][] tempOld=new int[10][data.length];
-	    int[] count=new int[10];
-	    for (int i=0;i< data.length;i++){
-		int digit= (data[i]%(int)Math.pow(10,place))-(data[i]%(int)(Math.pow(10,place-1)));
-		tempOld[digit][count[digit]]=data[i];
-		count[digit]+=1;
+	int mod=10;
+	int n=1;
+
+	//orders array
+	for (int rounds=maxDigits(data);rounds>0;rounds--){
+	    boolean inOrder=inOrder(data);
+	    ArrayList<ArrayList<Integer>> tempAL= new ArrayList<ArrayList<Integer>>();
+	    for (int i=0;i<10;i++){
+		tempAL.add(new ArrayList<Integer>());
 	    }
-	    if (count[0]==data.length){
-		done=true;
-	    }
-	    int index=0;
-	    for (int x=0;x<count.length;x++){
-		for (int start=0;start<count[x];start++){
-		    data[index]=tempOld[x][start];
-		    index+=1;
+	    //checks that array is not in order
+	    if (!inOrder){
+		for (int i=0;i<data.length;i++){
+		    int digit=(data[i]%mod)/n;
+		    int size=tempAL.get(digit).size(); //gets size of the arraylist at index digit of superarraylist temp
+		    tempAL.get(digit).add(size,data[i]); //NOTE:[Arraylist name].add(index,element)
 		}
+		//reads everything into new temporary array
+		int[] tempAR=new int[data.length];
+		int psn=0;
+		for (int i=0;i<tempAL.size();i++){
+		    if (tempAL.get(i).size()>0){
+			for (int x=0;x<tempAL.get(i).size();x++){
+			    tempAR[psn]=tempAL.get(i).get(x);
+			    psn+=1;
+			}
+		    }
+		}
+		data=tempAR;
+		mod=mod*10;
+		n=n*10;
 	    }
-	    place+=1;
+	    else{
+		break;
+	    }
 	}
+    }
+
+    public static boolean inOrder(int[] data){
+	boolean inOrder=true;
+	for (int i=0;i<data.length-1;i++){
+	    if (data[i]>data[i+1]){
+		inOrder=false;
+		break;
+	    }
+	}
+	return inOrder;
+    }
+
+    public static int maxDigits(int[] data){
+	int dmax=0;
+	for (int i=0;i<data.length;i++){
+	    String s=""+data[i];
+	    int intlen=s.length();
+	    if (intlen>dmax){
+		dmax=intlen;
+	    }
+	}
+	return dmax;
     }
 
     public static void main(String[]args){
@@ -111,12 +149,12 @@ public class Sorts{
 	System.out.println(period());
 	System.out.println();
 	int[] data = new int[]{5,10,4,12,1,0};
-	System.out.println(Arrays.toString(data));
+	System.out.println("Original data set:\n"+Arrays.toString(data));
 	//bubbleSort(data);
 	//selectionSort(data);
 	//insertionSort(data);
 	radix(data);
-	System.out.println(Arrays.toString(data));
+	System.out.println("Ordered data set:\n"+Arrays.toString(data));
     }
 
 }
