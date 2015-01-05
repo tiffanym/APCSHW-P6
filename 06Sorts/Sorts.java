@@ -1,3 +1,4 @@
+//package sorting;
 import java.util.*;
 import java.io.*;
 
@@ -143,12 +144,23 @@ public class Sorts{
 	}
 	return dmax;
     }
-
     public static void main(String[]args){
 	System.out.println(name());
 	System.out.println(period());
 	System.out.println();
-	int[] data = new int[]{5,10,4,12,1,0};
+	//int[] data = new int[]{5,10,4,12,1,0};
+	Random r=new Random();
+	int[] data=new int[1000];
+	int maxnum=1000;
+	if (args.length>0){
+	    data=new int[Integer.parseInt(args[0])];
+	    if (args.length==2){
+		maxnum=Integer.parseInt(args[1]);
+	    }
+	}
+	for (int i=0;i<data.length;i++){
+	    data[i]=r.nextInt(maxnum);
+	}
 	System.out.println("Original data set:\n"+Arrays.toString(data));
 	//bubbleSort(data);
 	//selectionSort(data);
@@ -156,5 +168,4 @@ public class Sorts{
 	radix(data);
 	System.out.println("Ordered data set:\n"+Arrays.toString(data));
     }
-
 }
